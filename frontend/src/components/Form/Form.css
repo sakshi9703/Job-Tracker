@@ -1,0 +1,128 @@
+.form-section {
+  background: #1e293b;
+}
+
+.job-form-card {
+  background: #334155;
+  border: 1px solid #475569;
+  border-radius: 24px;
+  padding: 5rem;
+
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.35);
+
+  animation: fadeUp 0.4s ease;
+}
+
+.form-title {
+  color: #f8fafc;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  color: #cbd5e1;
+  margin: 0;
+}
+
+.job-label {
+  color: #e2e8f0;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.job-input {
+  background: #475569 !important;
+  border: 1px solid #64748b !important;
+  color: #f8fafc !important;
+
+  border-radius: 14px !important;
+  padding: 0.85rem 1rem !important;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.job-input::placeholder {
+  color: #94a3b8;
+}
+
+.job-input:hover {
+  border-color: #94a3b8 !important;
+}
+
+.job-input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2) !important;
+}
+
+.job-input option {
+  background: #334155;
+  color: #f8fafc;
+}
+
+.job-input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+.job-input:-webkit-autofill,
+.job-input:-webkit-autofill:hover,
+.job-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #475569 inset !important;
+  -webkit-text-fill-color: #f8fafc !important;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+  border: none !important;
+
+  color: white;
+  font-weight: 600;
+
+  border-radius: 14px !important;
+  padding: 0.9rem !important;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.35);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .job-form-card {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+  }
+}

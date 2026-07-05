@@ -1,0 +1,71 @@
+.iq-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,.75);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:9999;
+}
+
+.iq-modal {
+  width:90%;
+  max-width:900px;
+
+  max-height:85vh;
+  overflow-y:auto;
+
+  background:#1e293b;
+
+  border:1px solid #475569;
+
+  border-radius:18px;
+
+  padding:2rem;
+}
+
+.iq-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:2rem;
+}
+
+.iq-header h2{
+  color:white;
+}
+
+.iq-header button{
+  border:none;
+  background:none;
+  color:white;
+  font-size:1.5rem;
+  cursor:pointer;
+}
+
+.iq-section{
+  margin-bottom:2rem;
+}
+
+.iq-section h3{
+  color:#818cf8;
+
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+
+  margin-bottom:1rem;
+}
+
+.iq-section ol{
+  padding-left:1.4rem;
+}
+
+.iq-section li{
+  color:#e2e8f0;
+  margin-bottom:1rem;
+  line-height:1.6;
+}

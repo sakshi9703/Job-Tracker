@@ -1,0 +1,42 @@
+.dashboard-card {
+  min-height: 120px;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  cursor: pointer;
+}
+
+.interview {
+  border: 2px solid blue;
+  background-color: rgba(195, 195, 255, 0.463);
+}
+.applied {
+  border: 2px solid yellow;
+  background-color: rgba(247, 247, 177, 0.512);
+}
+.rejected {
+  border: 2px solid red;
+  background-color: rgba(250, 144, 144, 0.408);
+}
+.accepted {
+  border: 2px solid green;
+  background-color: rgba(99, 255, 99, 0.6);
+}
+.all {
+  border: 2px solid rgb(110, 0, 178);
+  background-color: rgba(162, 108, 255, 0.6);
+}
+.active-card {
+  border: 2px solid black;
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.dashboard-card:hover {
+  transform: translateY(-5px);
+}
