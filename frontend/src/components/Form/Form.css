@@ -6,7 +6,7 @@
   background: #334155;
   border: 1px solid #475569;
   border-radius: 24px;
-  padding: 5rem;
+  padding: 32px;
 
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.35);
 
@@ -19,7 +19,6 @@
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
-
 .form-subtitle {
   color: #cbd5e1;
   margin: 0;
@@ -104,6 +103,24 @@
   cursor: not-allowed;
 }
 
+.cancel-btn{
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    border:1px solid #64748b;
+
+    background:transparent;
+
+    color:#cbd5e1;
+}
+
+.cancel-btn:hover{
+
+    background:#475569;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -118,7 +135,7 @@
 
 @media (max-width: 768px) {
   .job-form-card {
-    padding: 1.5rem;
+    padding: 22px;
     border-radius: 20px;
   }
 
@@ -126,3 +143,4 @@
     font-size: 1.5rem;
   }
 }
+

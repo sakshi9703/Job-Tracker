@@ -22,6 +22,6 @@ router.post(
   uploadResume,
 );
 router.get("/upload-resume", userVerification, getResume);
-router.delete("/upload-resume", userVerification, deleteResume);
+router.delete("/delete-resume", userVerification, deleteResume);
 
 export default router;

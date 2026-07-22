@@ -16,7 +16,7 @@ function ProtectedRoute({ children }) {
         );
 
         setIsAuthenticated(data.success);
-      } catch (error) {
+      } catch {
         setIsAuthenticated(false);
       }
     };

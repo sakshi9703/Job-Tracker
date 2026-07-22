@@ -108,12 +108,6 @@
   color: #f8fafc;
 }
 
-.profile-label {
-  display: block;
-  color: #e2e8f0;
-  margin-bottom: 0.75rem;
-}
-
 .input-group-custom {
   display: flex;
   align-items: center;
@@ -133,10 +127,6 @@
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
 }
 
-.input-icon {
-  color: #94a3b8;
-}
-
 .profile-input {
   width: 100%;
 
@@ -151,26 +141,22 @@
   color: #94a3b8;
 }
 
-.profile-btn {
-  width: 100%;
+.profile-btn{
+    border:none;
+    border-radius:12px;
+    padding:12px;
+    font-weight:600;
+}
 
-  border: none;
-  border-radius: 14px;
+.profile-btn.primary{
+    background:#2563eb;
+    color:white;
+    width: 100%;
+}
 
-  padding: 0.9rem;
-
-  background: linear-gradient(
-    135deg,
-    #2563eb,
-    #3b82f6
-  );
-
-  color: white;
-  font-weight: 600;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+.profile-btn.danger{
+    background:#dc2626;
+    color:white;
 }
 
 .profile-btn:hover {
@@ -242,10 +228,6 @@
   animation: slideDown 0.25s ease;
 }
 
-.password-section {
-  animation: slideDown 0.25s ease;
-}
-
 .profile-label {
   display: block;
   color: #e2e8f0;
@@ -253,40 +235,7 @@
   margin-top: 1rem;
 }
 
-.input-group-custom {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-
-  background: #475569;
-  border: 1px solid #64748b;
-
-  border-radius: 14px;
-  padding: 0.9rem 1rem;
-
-  margin-bottom: 1rem;
-}
-
-.input-group-custom:focus-within {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-}
-
 .input-icon {
-  color: #94a3b8;
-}
-
-.profile-input {
-  width: 100%;
-
-  background: transparent;
-  border: none;
-  outline: none;
-
-  color: #f8fafc;
-}
-
-.profile-input::placeholder {
   color: #94a3b8;
 }
 
@@ -337,4 +286,391 @@
 
 .back-btn svg {
   font-size: 1rem;
+}
+.resume-section{
+    margin-top:20px;
+}
+
+.resume-info h6{
+    color:white;
+    margin-bottom:6px;
+}
+
+.resume-info p{
+    color:#cbd5e1;
+    margin:0;
+    font-size:15px;
+}
+
+.resume-actions{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.resume-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 94px;
+    padding: 0.7rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.resume-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.35);
+}
+
+.resume-action-btn.view {
+    background: #2563eb;
+}
+
+.resume-action-btn.download {
+    background: #059669;
+}
+
+.resume-action-btn.delete {
+    background: #dc2626;
+}
+.uploaded-resume-card{
+    background:#1e293b;
+    border:1px solid #334155;
+    border-radius:18px;
+    padding:24px;
+
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.resume-info{
+    text-align:center;
+}
+
+.resume-icon{
+    font-size:48px;
+    color:#60a5fa;
+    margin-bottom:10px;
+}
+
+.resume-info h5{
+    color:white;
+    margin-bottom:8px;
+}
+
+.resume-info p{
+    color:#94a3b8;
+    margin:0;
+}
+.upload-label{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap: 0.5rem;
+    height:52px;
+    border:2px dashed #475569;
+    border-radius:12px;
+    cursor:pointer;
+    color:white;
+    font-weight: 600;
+    transition:.2s;
+}
+
+.upload-label:hover{
+border-color:#3b82f6;
+background:#1e293b;
+}
+.current-resume-card{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:16px;
+    margin-bottom:20px;
+
+    border-radius:14px;
+    background:#1e293b;
+    border:1px solid #334155;
+}
+
+.resume-details{
+    flex:1;
+    margin-left:15px;
+}
+
+.resume-details h6{
+    margin:0;
+    color:white;
+    font-weight:600;
+}
+
+.resume-details small{
+    color:#94a3b8;
+}
+
+.resume-links{
+    display:flex;
+    gap:10px;
+}
+
+.small-btn{
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:.9rem;
+    font-weight:600;
+}
+
+.small-btn.view{
+    background:#2563eb;
+    color:white;
+}
+
+.small-btn.download{
+    background:#059669;
+    color:white;
+}
+
+.file-picker{
+    margin-bottom:0;
+}
+
+.file-picker input{
+    display:none;
+}
+
+.selected-file{
+    display:block;
+    margin-top:10px;
+    color:#94a3b8;
+    font-size:.9rem;
+    text-align: center;
+}
+
+.replace-resume {
+    padding-top: 0.25rem;
+}
+
+.replace-resume-heading {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.replace-resume-heading h4 {
+    margin: 0 0 0.35rem;
+    color: #f8fafc;
+    font-size: 1rem;
+}
+
+.replace-resume-heading p {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.resume-buttons{
+    display:flex;
+    gap:15px;
+}
+
+.profile-btn.primary{
+    flex:1;
+    background:#2563eb;
+}
+
+.profile-btn.danger{
+    background:#dc2626;
+}
+
+.profile-btn.danger:hover{
+    background:#b91c1c;
+}
+
+@media (max-width: 420px) {
+    .resume-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .resume-action-btn {
+        width: 100%;
+    }
+}
+
+/* Profile page visual refresh */
+.profile-page {
+  background:
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.2), transparent 30rem),
+    radial-gradient(circle at top right, rgba(14, 165, 233, 0.12), transparent 24rem),
+    #0f172a;
+}
+
+.profile-header {
+  margin-bottom: 0;
+}
+
+.profile-avatar {
+  background: linear-gradient(135deg, #2563eb, #38bdf8);
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+}
+
+.profile-header h1 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 750;
+}
+
+.profile-grid {
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  grid-template-areas:
+    "account resume"
+    "settings settings";
+  align-items: start;
+}
+
+.account-card {
+  grid-area: account;
+}
+
+.resume-card {
+  grid-area: resume;
+}
+
+.settings-card {
+  grid-area: settings;
+}
+
+.settings-card .settings-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+.settings-card .settings-form,
+.settings-card .password-section {
+  grid-column: 1 / -1;
+}
+
+.profile-card {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.2);
+  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.28);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(96, 165, 250, 0.45);
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.38);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-weight: 700;
+}
+
+.section-title svg {
+  color: #60a5fa;
+}
+
+.info-item {
+  background: rgba(71, 85, 105, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.info-icon {
+  flex: 0 0 2.5rem;
+  height: 2.5rem;
+  padding: 0.6rem;
+  background: rgba(37, 99, 235, 0.15);
+  border-radius: 10px;
+}
+
+.profile-btn {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.uploaded-resume-card {
+  background: rgba(15, 23, 42, 0.62);
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+.resume-info h5 {
+  overflow-wrap: anywhere;
+}
+
+.upload-label {
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.upload-label:hover {
+  background: rgba(37, 99, 235, 0.12);
+}
+
+.upload-label:focus-within {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.16);
+}
+
+.empty-resume {
+  padding: 1.5rem;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px dashed rgba(96, 165, 250, 0.35);
+  border-radius: 18px;
+}
+
+.empty-resume p {
+  margin: 0 0 1.25rem;
+  color: #cbd5e1;
+}
+
+.back-btn:focus-visible,
+.profile-btn:focus-visible,
+.settings-toggle-btn:focus-visible,
+.resume-action-btn:focus-visible,
+.upload-label:focus-visible {
+  outline: 3px solid rgba(96, 165, 250, 0.7);
+  outline-offset: 3px;
+}
+
+@media (max-width: 576px) {
+  .profile-header-wrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-card:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "account"
+      "resume"
+      "settings";
+  }
+}
+
+@media (max-width: 640px) {
+  .settings-card .settings-actions {
+    grid-template-columns: 1fr;
+  }
 }

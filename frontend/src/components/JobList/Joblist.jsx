@@ -19,13 +19,12 @@ export default function JobList({
   jobList,
   setFormData,
   setEditingIndex,
-  scrollToForm,
   jobRef,
   error,
   loading,
   refreshData,
+  setShowJobModal
 }) {
-  const [analyzingJobId, setAnalyzingJobId] = useState(null);
   const [generatingQuestions, setGeneratingQuestions] = useState(null);
   const [analysis, setAnalysis] = useState(null);
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
@@ -67,7 +66,7 @@ export default function JobList({
         color: "#f8fafc",
         confirmButtonColor: "#3b82f6",
       });
-    } catch (err) {
+    } catch {
       Swal.fire({
         title: "Error",
         text: "Failed to delete the job.",
@@ -80,7 +79,6 @@ export default function JobList({
   };
 
   const handleEdit = (job) => {
-    console.log("button clicked");
     setFormData({
       company: job.company,
       role: job.role,
@@ -92,7 +90,7 @@ export default function JobList({
     });
 
     setEditingIndex(job._id);
-    scrollToForm();
+    setShowJobModal(true);
   };
 
   const getStatusClass = (status) => {
@@ -100,7 +98,6 @@ export default function JobList({
   };
 
   const handleAnalyzeResume = async (jobId) => {
-    setAnalyzingJobId(jobId);
     setLoadingAI(true);
     try {
       const res = await axios.post(
@@ -110,7 +107,6 @@ export default function JobList({
           withCredentials: true,
         },
       );
-      setAnalyzingJobId(null);
       setAnalysis(res.data);
 
       setShowAnalysisModal(true);
@@ -218,7 +214,11 @@ export default function JobList({
               </div>
             )}
 
-            <div className="job-actions">
+            <div
+              className={`job-actions ${
+                job.status === "Applied" ? "single-ai-action" : ""
+              }`}
+            >
               <button
                 className="action-btn edit-btn"
                 onClick={() => handleEdit(job)}
@@ -235,43 +235,43 @@ export default function JobList({
                 Delete
               </button>
 
-{["Interested", "Applied", "Interview"].includes(job.status) && (
-  <>
-    {!job.hasQuestions ? (
-      <button
-        className="action-btn interview-btn"
-        onClick={() => handleGenerateInterviewQuestions(job._id)}
-        disabled={
-          generatingQuestions === job._id ||
-          showQuestionsGeneratingModal
-        }
-      >
-        Generate Interview Questions
-      </button>
-    ) : job.needsQuestionRegeneration ? (
-      <button
-        className="action-btn interview-btn"
-        onClick={() => handleGenerateInterviewQuestions(job._id)}
-        disabled={
-          generatingQuestions === job._id ||
-          showQuestionsGeneratingModal
-        }
-      >
-        Generate Questions Again
-      </button>
-    ) : (
-      <button
-        className="action-btn interview-btn"
-        onClick={() => {
-          setQuestions(job.interviewQuestions);
-          setOpenQuestions(true);
-        }}
-      >
-        View Generated Questions
-      </button>
-    )}
-  </>
-)}
+              {["Interested", "Applied", "Interview"].includes(job.status) && (
+                <>
+                  {!job.hasQuestions ? (
+                    <button
+                      className="action-btn interview-btn"
+                      onClick={() => handleGenerateInterviewQuestions(job._id)}
+                      disabled={
+                        generatingQuestions === job._id ||
+                        showQuestionsGeneratingModal
+                      }
+                    >
+                      Generate Interview Questions
+                    </button>
+                  ) : job.needsQuestionRegeneration ? (
+                    <button
+                      className="action-btn interview-btn"
+                      onClick={() => handleGenerateInterviewQuestions(job._id)}
+                      disabled={
+                        generatingQuestions === job._id ||
+                        showQuestionsGeneratingModal
+                      }
+                    >
+                      Generate Questions Again
+                    </button>
+                  ) : (
+                    <button
+                      className="action-btn interview-btn"
+                      onClick={() => {
+                        setQuestions(job.interviewQuestions);
+                        setOpenQuestions(true);
+                      }}
+                    >
+                      View Generated Questions
+                    </button>
+                  )}
+                </>
+              )}
 
               {job.status === "Interested" && (
                 <>

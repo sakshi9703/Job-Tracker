@@ -63,6 +63,7 @@ export default function Toolbar({
               onChange={(e) => setSortOrder(e.target.value)}
               className="toolbar-select"
             >
+              <option value="recent">Recently Added</option>
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
             </select>

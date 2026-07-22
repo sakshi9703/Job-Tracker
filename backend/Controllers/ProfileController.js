@@ -102,10 +102,11 @@ export const uploadResume = async (req, res) => {
     const resumeText = await parseResume(req.file.path);
 
     await User.findByIdAndUpdate(req.userId, {
-  resumeText,
-  resumeFileName: req.file.originalname,
-  resumeUpdatedAt: new Date(),
-});
+      resumeText,
+      resumeFileName: req.file.originalname,
+      resumePath: req.file.path.replace(/\\/g, "/"), // Save the file location
+      resumeUpdatedAt: new Date(),
+    });
 
     res.json({
       message: "Resume uploaded successfully",
@@ -121,11 +122,19 @@ export const uploadResume = async (req, res) => {
 
 export const getResume = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.userId);
+
+    if (!user.resumePath) {
+      return res.json({ hasResume: false });
+    }
 
     res.json({
+      hasResume: true,
       resumeFileName: user.resumeFileName,
-      hasResume: !!user.resumeText,
+      resumeUpdatedAt: user.resumeUpdatedAt,
+      resumeUrl: user.resumePath
+        ? `http://localhost:3000/${user.resumePath}`
+        : null,
     });
   } catch (err) {
     res.status(500).json({
@@ -136,17 +145,29 @@ export const getResume = async (req, res) => {
 
 export const deleteResume = async (req, res) => {
   try {
-    await User.findByIdAndUpdate(req.user.id, {
-      resumeText: "",
-      resumeFileName: "",
-    });
+    await User.findByIdAndUpdate(
+      req.userId,
+      {
+        $unset: {
+          resumePath: 1,
+          resumeFileName: 1,
+          resumeText: 1,
+          resumeUpdatedAt: 1,
+        },
+      },
+      { new: true }
+    );
 
-    res.json({
+    return res.status(200).json({
+      success: true,
       message: "Resume deleted successfully",
     });
   } catch (err) {
-    res.status(500).json({
-      message: err.message,
+    console.error(err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to delete resume",
     });
   }
 };

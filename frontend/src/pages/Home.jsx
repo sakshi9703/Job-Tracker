@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import Navbar from "../components/Navbar.jsx";
 import Form from "../components/Form/Form.jsx";
 import Dashboard from "../components/Dashboard.jsx";
@@ -6,15 +6,13 @@ import Toolbar from "../components/Tools/Toolbar.jsx";
 import JobList from "../components/JobList/Joblist.jsx";
 import Pagination from "../components/Pagination.jsx";
 import axios from "axios";
-import { Route, Routes } from "react-router-dom";
-import { Login, Signup } from "../pages";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import Analytics from "../components/Analytics/Analytics.jsx";
+import "./Home.css"
 
 function Home() {
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies(["token"]);
+  const [, removeCookie] = useCookies(["token"]);
   const [formData, setFormData] = useState({
     company: "",
     role: "",
@@ -26,18 +24,14 @@ function Home() {
   });
 
   const [jobList, setJobList] = useState([]);
-
   const [error, setError] = useState(null);
-
   const [loading, setLoading] = useState(true);
-
-  const [sortOrder, setSortOrder] = useState("newest");
-
+  const [sortOrder, setSortOrder] = useState("recent");
   const [debouncedSearchItem, setDebouncedSearchItem] = useState("");
-
   const [status, setStatus] = useState("All");
+  const [showJobModal, setShowJobModal] = useState(false);
 
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -51,12 +45,14 @@ function Home() {
       });
 
       setJobList(Array.isArray(res.data) ? res.data : []);
+      setError(null);
     } catch (err) {
       console.log(err);
+      setError("Unable to load jobs. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [debouncedSearchItem, sortOrder, status]);
   const [stats, SetStats] = useState({
     interested: 0,
     applied: 0,
@@ -65,7 +61,7 @@ function Home() {
     rejected: 0,
   })
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const res = await axios.get(`http://localhost:3000/jobs/stats`,
         { withCredentials: true, }
@@ -74,21 +70,20 @@ function Home() {
     } catch (err) {
       console.log(err);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    fetchJobs();
-  }, [sortOrder, status, debouncedSearchItem]);
+    void fetchJobs();
+  }, [fetchJobs]);
 
   useEffect(() => {
-    fetchStats();
-    fetchJobs();
-  }, [sortOrder]);
+    void fetchStats();
+  }, [fetchStats]);
 
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const { data } = await axios.get(
+        await axios.get(
           "http://localhost:3000/verify",
           { withCredentials: true }
         );
@@ -122,25 +117,37 @@ function Home() {
   const totalPages = Math.ceil(jobList.length / jobsperPage);
 
   const jobRef = useRef(null);
-  const formRef = useRef(null);
+  useEffect(() => {
+  const originalOverflow = document.body.style.overflow;
 
-  const scrollToJobs = () => {
-    jobRef.current?.scrollIntoView({
-      behavior: "smooth"
-    });
-  };
-
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({
-      behavior: "smooth"
-    });
+  if (showJobModal) {
+    document.body.style.overflow = "hidden";
   }
 
+  return () => {
+    document.body.style.overflow = originalOverflow;
+  };
+}, [showJobModal]);
 
   return (
     <>
       <Navbar removeCookie={removeCookie} navigate={navigate}></Navbar>
-      <Dashboard jobList={jobList} status={status} setStatus={setStatus} scrollToJobs={scrollToJobs} stats={stats} />
+      <Dashboard
+        jobList={jobList}
+        stats={stats}
+        setEditingIndex={setEditingIndex}
+        setFormData={setFormData}
+        setShowJobModal={setShowJobModal}
+      />
+      {showJobModal && (
+  <div
+    className="job-modal-overlay"
+    onClick={() => setShowJobModal(false)}
+  >
+    <div
+      className="job-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
       <Form
         jobList={jobList}
         setJobList={setJobList}
@@ -148,10 +155,13 @@ function Home() {
         setEditingIndex={setEditingIndex}
         formData={formData}
         setFormData={setFormData}
-        formRef={formRef}
         fetchJobs={fetchJobs}
         refreshData={refreshData}
-      ></Form>
+        onClose={() => setShowJobModal(false)}
+      />
+    </div>
+  </div>
+)}
       <Toolbar
         setDebouncedSearchItem={setDebouncedSearchItem}
         debouncedSearchItem={debouncedSearchItem}
@@ -159,21 +169,18 @@ function Home() {
         setSortOrder={setSortOrder}
         status={status}
         setStatus={setStatus}
-        setJobList={setJobList}
         setCurrentPage={setCurrentPage}
       ></Toolbar>
       <JobList
-        setJobList={setJobList}
         jobList={jobList}
         currentJobs={currentJobs}
         setFormData={setFormData}
         setEditingIndex={setEditingIndex}
-        scrollToForm={scrollToForm}
         jobRef={jobRef}
-        fetchJobs={fetchJobs}
         error={error}
         loading={loading}
         refreshData={refreshData}
+        setShowJobModal={setShowJobModal}
       ></JobList>
       <Pagination
         totalPages={totalPages}

@@ -235,3 +235,63 @@
     grid-template-columns: 1fr;
   }
 }
+
+.dashboard-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 4rem;
+}
+
+.add-job-btn,
+.upload-resume-btn {
+  min-width: 270px;
+  height: 58px;
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-job-btn {
+  background: #2563eb;
+  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.35);
+}
+
+.upload-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #0f766e;
+  box-shadow: 0 15px 35px rgba(13, 148, 136, 0.3);
+}
+
+.add-job-btn:hover,
+.upload-resume-btn:hover {
+  transform: translateY(-3px);
+}
+
+.add-job-btn:focus-visible,
+.upload-resume-btn:focus-visible {
+  outline: 3px solid rgba(125, 211, 252, 0.85);
+  outline-offset: 3px;
+}
+
+@media (max-width: 576px) {
+  .dashboard-actions {
+    flex-direction: column-reverse;
+  }
+
+  .dashboard-actions .add-job-btn,
+  .dashboard-actions .upload-resume-btn {
+    width: min(100%, 320px);
+    min-width: 0;
+    height: 52px;
+    font-size: 0.9rem;
+  }
+}

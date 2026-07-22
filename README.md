@@ -103,7 +103,7 @@ project/
 ## Application Preview
 
 ### Dashboard
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](Screenshots/dashboard.png)
 
 ### Jobs Page
 ![Jobs](screenshots/Job-Cards.png)
@@ -155,7 +155,7 @@ Create a `.env` file.
 Example:
 
 ```env
-PORT=5000
+PORT=3000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 GEMINI_API_KEY=your_gemini_api_key

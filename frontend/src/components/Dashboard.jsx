@@ -4,21 +4,25 @@ import {
   FiCheckCircle,
   FiXCircle,
   FiBriefcase,
+  FiUpload,
+  FiBookmark
 } from "react-icons/fi";
 import Analytics from "./Analytics/Analytics";
 import "../App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
-export default function Dashboard({ jobList, stats }) {
+export default function Dashboard({ jobList, stats, setEditingIndex, setFormData, setShowJobModal }) {
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
 
   const statItems = [
     {
       label: "Interested",
       value: stats?.interested || 0,
-      icon: <FiSend />,
+      icon: <FiBookmark />,
       className: "interested",
     },
     {
@@ -75,7 +79,7 @@ export default function Dashboard({ jobList, stats }) {
         {/* Header */}
         <div className="dashboard-header">
           <h1>Hi, {username ? `${username}!` : "there!"}</h1>
-          <p className="fs-5">Your dashboard</p>
+          <p className="fs-5">Track your job applications with us.</p>
         </div>
 
         {/* Summary Cards */}
@@ -140,6 +144,37 @@ export default function Dashboard({ jobList, stats }) {
               ))}
             </div>
           </div>
+        </div>
+
+        <div className="dashboard-actions">
+          <button
+            type="button"
+            className="upload-resume-btn"
+            onClick={() => navigate("/profile")}
+          >
+            <FiUpload />
+            Upload Your Resume
+          </button>
+
+          <button
+            type="button"
+            className="add-job-btn"
+            onClick={() => {
+              setEditingIndex(null);
+              setFormData({
+                company: "",
+                role: "",
+                status: "",
+                date: "",
+                location: "",
+                notes: "",
+                description: "",
+              });
+              setShowJobModal(true);
+            }}
+          >
+            + Add New Job
+          </button>
         </div>
       </div>
     </div>

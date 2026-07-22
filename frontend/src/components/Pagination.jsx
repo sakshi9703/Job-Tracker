@@ -1,29 +1,11 @@
-export default function Pagination({
-  totalPages,
-  currentPage,
-  setCurrentPage,
-}) 
-{
-
-    const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  
+export default function Pagination({ totalPages, currentPage, setCurrentPage }) {
   return (
     <nav className="mt-4">
       <ul className="pagination justify-content-center">
         <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
           <button
             className="page-link"
+            disabled={currentPage === 1}
             onClick={() => setCurrentPage(currentPage - 1)}
           >
             Previous
@@ -46,6 +28,7 @@ export default function Pagination({
         >
           <button
             className="page-link"
+            disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(currentPage + 1)}
           >
             Next

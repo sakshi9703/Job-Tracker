@@ -29,7 +29,12 @@ resumeFileName: {
 },
 resumeUpdatedAt: {
   type: Date
-}},
+},
+resumePath: {
+  type: String,
+  default: "",
+},
+},
 { timestamps: true });
 
 userSchema.pre("save", async function () {

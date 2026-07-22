@@ -63,27 +63,28 @@ const generateWithRetry = async (prompt) => {
 
 export const analyzeResume = async (resumeText, jobDescription) => {
   const prompt = `
-You are an ATS (Applicant Tracking System).
+You are an ATS Resume Analyzer.
 
-Analyze the resume against the job description.
+Compare the resume and the job description.
 
-Calculate the score based on:
+Scoring Rules:
 
-- Technical skills match (50%)
-- Relevant projects (20%)
-- Experience (15%)
-- Education (10%)
-- Missing required skills (5%)
+- 90–100: Excellent match
+- 70–89: Strong match
+- 50–69: Partial match
+- 20–49: Weak match
+- 0–19: Almost no match
+
+If the job description contains almost none of the candidate's skills,
+the score MUST be below 30.
+
+If the job description is unrelated to the resume,
+the score MUST be below 20.
+
+Do not guess.
+Base the score only on actual matching skills.
 
 Return ONLY valid JSON.
-
-Rules:
-1. Give a match score between 0 and 100.
-2. Focus on technical skills, tools, frameworks, education, and experience.
-3. Ignore phone numbers, email addresses, and formatting.
-4. Return ONLY valid JSON.
-
-Response format:
 
 {
   "score": 0,

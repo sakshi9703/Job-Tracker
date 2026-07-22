@@ -108,9 +108,22 @@
 
 .job-actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(170px, 1fr));
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+/* Buttons occupy equal width */
+.job-actions .action-btn {
+  width: 100%;
+}
+
+/* Applied status:
+   Only interview button remains in AI row */
+.single-ai-action .interview-btn {
+  grid-column: 1 / -1;
+  max-width: 320px;
+  justify-self: center;
 }
 
 .action-btn {

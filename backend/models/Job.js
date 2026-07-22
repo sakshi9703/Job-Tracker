@@ -51,7 +51,15 @@ interviewQuestions: {
   projectQuestions: [String],
   generatedAt: Date,
 }},
-);
+{
+    timestamps: true,
+  });
+
+jobSchema.index({ userId: 1 });
+jobSchema.index({ status: 1 });
+jobSchema.index({ createdAt: -1 });
+jobSchema.index({ company: "text" });
+jobSchema.index({ role: "text" });
 
 const Job = mongoose.model("Job", jobSchema);
 export default Job;

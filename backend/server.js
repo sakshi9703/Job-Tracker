@@ -11,6 +11,7 @@ import { jobSchema } from "./Validations/jobValidation.js";
 import { validate } from "./Middlewares/Validate.js";
 import aiRoutes from "./routes/ai.js";
 import profileRoutes from "./Routes/ProfileRoute.js";
+import path from "path";
 
 const app = express();
 app.use(
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/", authRoute);
 app.use("/jobs", userVerification);
+app.use("/uploads", express.static("uploads"));
 app.use("/ai", aiRoutes);
 app.use("/profile", profileRoutes);
 
@@ -167,9 +169,25 @@ app.get("/jobs", async (req, res) => {
     }
 
     // Sorting
-    const sortOption = {
-      date: sort === "oldest" ? 1 : -1,
-    };
+    let sortOption = {};
+
+switch (sort) {
+  case "recent":
+    // Recently added to the tracker
+    sortOption = { createdAt: -1 };
+    break;
+
+  case "oldest":
+    // Oldest application date
+    sortOption = { date: 1 };
+    break;
+
+  case "newest":
+  default:
+    // Newest application date
+    sortOption = { date: -1 };
+    break;
+}
 
     // Fetch user
     const user = await User.findById(req.userId);

@@ -1,30 +1,25 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
-import { FiUpload, FiFileText } from "react-icons/fi";
+import { FiUpload } from "react-icons/fi";
 import { toast } from "react-toastify";
 
-
-export default function UploadResume({ onSuccess }) {
-  const [resume, setResume] = useState(null);
+export default function UploadResume({
+  hasResume,
+  onSuccess,
+}) {
+  const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleFileChange = (e) => {
-    setResume(e.target.files[0]);
-  };
+  const fileInputRef = useRef(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!resume) {
-      toast.error("Please select a PDF resume.");
-      return;
-    }
+  const uploadResume = async (file) => {
+    if (!file) return;
 
     setLoading(true);
 
     try {
       const formData = new FormData();
-      formData.append("resume", resume);
+      formData.append("resume", file);
 
       const { data } = await axios.post(
         "http://localhost:3000/profile/upload-resume",
@@ -39,53 +34,64 @@ export default function UploadResume({ onSuccess }) {
 
       toast.success(data.message);
 
-      setResume(null);
+      setSelectedFile(null);
 
-      // Clear the file input
-      e.target.reset();
-
-      if (onSuccess) {
-        onSuccess();
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
       }
-    } catch (err) {
-  console.log(err.response?.data);
 
-  toast.error(
-    err.response?.data?.message ||
-    "Failed to upload resume."
-  );
-} finally {
+      onSuccess?.();
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message || "Failed to upload resume."
+      );
+    } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <form className="settings-form" onSubmit={handleSubmit}>
-      <label className="profile-label">
-        Upload Resume (PDF)
-      </label>
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
 
-      <div className="input-group-custom">
-        <FiFileText className="input-icon" />
+    if (file) {
+      setSelectedFile(file);
+      uploadResume(file);
+    }
+  };
+
+  return (
+    <div className={`resume-upload ${hasResume ? "replace-resume" : ""}`}>
+      {hasResume && (
+        <div className="replace-resume-heading">
+          <h4>Replace your resume</h4>
+          <p>Select a new file to update your saved resume.</p>
+        </div>
+      )}
+
+      <div className="file-picker">
+        <label htmlFor="resume-file" className="upload-label">
+          <FiUpload />
+          {loading
+            ? "Uploading..."
+            : hasResume
+              ? "Choose a new resume"
+              : "Upload Resume"}
+        </label>
 
         <input
+          id="resume-file"
           type="file"
-          accept=".pdf"
-          className="profile-input"
+          accept=".pdf,.doc,.docx"
+          hidden
+          disabled={loading}
+          ref={fileInputRef}
           onChange={handleFileChange}
-          required
         />
+
+        <span className="selected-file">
+          {selectedFile ? selectedFile.name : "PDF, DOC, or DOCX"}
+        </span>
       </div>
-
-      <button
-        type="submit"
-        className="profile-btn"
-        disabled={loading}
-      >
-        <FiUpload />
-
-        {loading ? "Uploading..." : "Upload Resume"}
-      </button>
-    </form>
+    </div>
   );
 }
