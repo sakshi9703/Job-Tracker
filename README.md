@@ -106,19 +106,19 @@ project/
 ![Dashboard](Screenshots/dashboard.png)
 
 ### Jobs Page
-![Jobs](screenshots/Job-Cards.png)
+![Jobs](Screenshots/Job-Cards.png)
 
 ### Analytics
-![Resume Analysis](screenshots/Resume_analysis.png)
+![Resume Analysis](Screenshots/Resume_analysis.png)
 
 ### Add-Job
-![AI Chat](screenshots/Add-New_Job.png)
+![AI Chat](Screenshots/Add-New_Job.png)
 
 ### Interview-Questions
-![Interview-Questions](screenshots/AI_Generated_Questions.png)
+![Interview-Questions](Screenshots/AI_Generated_Questions.png)
 
 ### Login-Page
-![Login-page](screenshots/Login_page.png)
+![Login-page](Screenshots/Login_page.png)
 
 ---
 
