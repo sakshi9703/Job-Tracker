@@ -4,7 +4,7 @@ import User from "../models/UserModel.js";
 import {
   analyzeResume,
   interviewQuestionsGenerator,
-} from "../services/resumeAnalyzer.js";
+} from "../Services/resumeAnalyzer.js";
 import { userVerification } from "../Middlewares/AuthMiddleware.js";
 
 const router = express.Router();
