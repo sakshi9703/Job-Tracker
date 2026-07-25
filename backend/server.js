@@ -9,7 +9,7 @@ import { userVerification } from "./Middlewares/AuthMiddleware.js";
 import User from "./models/UserModel.js";
 import { jobSchema } from "./Validations/jobValidation.js";
 import { validate } from "./Middlewares/Validate.js";
-import aiRoutes from "./routes/ai.js";
+import aiRoutes from "./Routes/ai.js";
 import profileRoutes from "./Routes/ProfileRoute.js";
 import path from "path";
 
