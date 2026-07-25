@@ -28,7 +28,7 @@ export default function Form({
     try {
       if (editingIndex) {
         await axios.put(
-          `http://localhost:3000/jobs/${editingIndex}`,
+          `${import.meta.env.VITE_API_URL}/jobs/${editingIndex}`,
           formData,
           { withCredentials: true },
         );
@@ -36,7 +36,7 @@ export default function Form({
         notifySuccess("Job updated successfully");
         setEditingIndex(null);
       } else {
-        await axios.post("http://localhost:3000/jobs", formData, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/jobs`, formData, {
           withCredentials: true,
         });
 

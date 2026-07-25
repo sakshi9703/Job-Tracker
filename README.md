@@ -198,7 +198,7 @@ npm run dev
 The application will run at:
 
 ```
-http://localhost:5173
+import.meta.env.VITE_API_URL
 ```
 
 ---

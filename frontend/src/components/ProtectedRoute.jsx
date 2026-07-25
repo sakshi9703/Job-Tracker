@@ -9,7 +9,7 @@ function ProtectedRoute({ children }) {
     const verifyUser = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/verify",
+          `${import.meta.env.VITE_API_URL}/verify`,
           {
             withCredentials: true,
           }

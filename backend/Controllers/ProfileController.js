@@ -133,7 +133,7 @@ export const getResume = async (req, res) => {
       resumeFileName: user.resumeFileName,
       resumeUpdatedAt: user.resumeUpdatedAt,
       resumeUrl: user.resumePath
-        ? `http://localhost:3000/${user.resumePath}`
+        ? `${import.meta.env.VITE_API_URL}/${user.resumePath}`
         : null,
     });
   } catch (err) {

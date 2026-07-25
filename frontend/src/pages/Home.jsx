@@ -35,7 +35,7 @@ function Home() {
     try {
       setLoading(true);
 
-      const res = await axios.get("http://localhost:3000/jobs", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs`, {
         params: {
           search: debouncedSearchItem,
           status,
@@ -63,7 +63,7 @@ function Home() {
 
   const fetchStats = useCallback(async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/jobs/stats`,
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs/stats`,
         { withCredentials: true, }
       );
       SetStats(res.data);
@@ -84,7 +84,7 @@ function Home() {
     const verifyUser = async () => {
       try {
         await axios.get(
-          "http://localhost:3000/verify",
+          `${import.meta.env.VITE_API_URL}/verify`,
           { withCredentials: true }
         );
       } catch (err) {

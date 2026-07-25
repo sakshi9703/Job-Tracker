@@ -38,7 +38,7 @@ export default function Profile() {
       console.log("Fetching resume...");
 
       const { data } = await axios.get(
-        "http://localhost:3000/profile/upload-resume",
+        `${import.meta.env.VITE_API_URL}/profile/upload-resume`,
         {
           withCredentials: true,
         },
@@ -54,7 +54,7 @@ export default function Profile() {
 
   const fetchProfile = async () => {
     try {
-      const { data } = await axios.get("http://localhost:3000/profile", {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/profile`, {
         withCredentials: true,
       });
 
@@ -68,7 +68,7 @@ export default function Profile() {
   const deleteResume = async () => {
     try {
       const { data } = await axios.delete(
-        "http://localhost:3000/profile/delete-resume",
+        `${import.meta.env.VITE_API_URL}/profile/delete-resume`,
         {
           withCredentials: true,
         },
@@ -133,7 +133,7 @@ export default function Profile() {
 
     try {
       const { data } = await axios.put(
-        "http://localhost:3000/profile/username",
+        `${import.meta.env.VITE_API_URL}/profile/username`,
         { username },
         { withCredentials: true },
       );

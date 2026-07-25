@@ -22,7 +22,7 @@ export default function Navbar({ removeCookie, navigate }) {
 
     try {
       await axios.post(
-        "http://localhost:3000/logout",
+        `${import.meta.env.VITE_API_URL}/logout`,
         {},
         { withCredentials: true }
       );

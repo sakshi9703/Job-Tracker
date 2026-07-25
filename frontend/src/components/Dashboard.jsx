@@ -12,6 +12,7 @@ import "../App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 
 export default function Dashboard({ jobList, stats, setEditingIndex, setFormData, setShowJobModal }) {
@@ -54,10 +55,7 @@ export default function Dashboard({ jobList, stats, setEditingIndex, setFormData
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:3000/verify",
-          { withCredentials: true }
-        );
+        const { data } = await api.get("/jobs");
 
         if (data.user) {
           setUsername(

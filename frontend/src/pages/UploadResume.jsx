@@ -22,7 +22,7 @@ export default function UploadResume({
       formData.append("resume", file);
 
       const { data } = await axios.post(
-        "http://localhost:3000/profile/upload-resume",
+        `${import.meta.env.VITE_API_URL}/profile/upload-resume`,
         formData,
         {
           withCredentials: true,

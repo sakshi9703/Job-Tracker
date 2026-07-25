@@ -31,10 +31,14 @@ export const Signup = async (req, res) => {
 
     const token = createSecretToken(user._id);
 
-    res.cookie("token", token, {
+   res.cookie("token", token, {
   httpOnly: true,
-  secure: false, // true in production with HTTPS
-  sameSite: "lax",
+  secure: process.env.NODE_ENV === "production",
+  sameSite:
+    process.env.NODE_ENV === "production"
+      ? "None"
+      : "Lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
 });
 
     res.status(201).json({

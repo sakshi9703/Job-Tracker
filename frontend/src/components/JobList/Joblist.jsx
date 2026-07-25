@@ -56,7 +56,7 @@ export default function JobList({
     if (!result.isConfirmed) return;
 
     try {
-      await axios.delete(`http://localhost:3000/jobs/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/jobs/${id}`, {
         withCredentials: true,
       });
 
@@ -105,7 +105,7 @@ export default function JobList({
     setLoadingAI(true);
     try {
       const res = await axios.post(
-        `http://localhost:3000/ai/match-resume/${jobId}`,
+        `${import.meta.env.VITE_API_URL}/ai/match-resume/${jobId}`,
         {},
         {
           withCredentials: true,
@@ -129,7 +129,7 @@ export default function JobList({
       setShowQuestionsGeneratingModal(true);
 
       const res = await axios.post(
-        `http://localhost:3000/ai/interview-questions/${jobId}`,
+        `${import.meta.env.VITE_API_URL}/ai/interview-questions/${jobId}`,
         {},
         {
           withCredentials: true,

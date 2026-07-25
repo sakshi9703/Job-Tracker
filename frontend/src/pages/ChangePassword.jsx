@@ -25,7 +25,7 @@ export default function ChangePassword({ onSuccess }) {
 
     try {
       const { data } = await axios.put(
-        "http://localhost:3000/profile/password",
+        `${import.meta.env.VITE_API_URL}/profile/password`,
         passwords,
         { withCredentials: true }
       );
