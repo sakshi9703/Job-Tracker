@@ -14,9 +14,20 @@ import profileRoutes from "./Routes/ProfileRoute.js";
 import path from "path";
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://job-tracker-chi-five.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
@@ -275,8 +286,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("listening to port", PORT);
+  console.log(`Server running on port ${PORT}`);
 });
