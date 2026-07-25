@@ -35,6 +35,10 @@ export default function JobList({
   const [showQuestionsGeneratingModal, setShowQuestionsGeneratingModal] =
     useState(false);
 
+    const [expandedJobId, setExpandedJobId] = useState(null);
+
+    
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Delete job?",
@@ -168,6 +172,8 @@ export default function JobList({
 
       <div className="job-grid">
         {currentJobs.map((job) => (
+          
+
           <div key={job._id} className="job-card">
             <div className="job-header">
               <div>
@@ -181,8 +187,27 @@ export default function JobList({
             </div>
 
             {job.description && (
-              <div className="job-notes">{job.description}</div>
-            )}
+  <div className="job-notes">
+    {expandedJobId === job._id
+      ? job.description
+      : job.description.slice(0, 200)}
+
+    {job.description.length > 200 && (
+      <span
+        className="read-toggle"
+        onClick={() =>
+          setExpandedJobId(
+            expandedJobId === job._id ? null : job._id
+          )
+        }
+      >
+        {expandedJobId === job._id
+          ? " Read Less"
+          : "...Read More"}
+      </span>
+    )}
+  </div>
+)}
 
             <div className="job-meta">
               <div>
@@ -196,7 +221,29 @@ export default function JobList({
               </div>
             </div>
 
-            {job.notes && <div className="job-notes">{job.notes}</div>}
+
+            {job.notes && (
+  <div className="job-notes">
+    {expandedJobId === job._id
+      ? job.notes
+      : job.notes.slice(0, 150)}
+
+    {job.notes.length > 150 && (
+      <span
+        className="read-toggle"
+        onClick={() =>
+          setExpandedJobId(
+            expandedJobId === job._id ? null : job._id
+          )
+        }
+      >
+        {expandedJobId === job._id
+          ? " Read Less"
+          : "...Read More"}
+      </span>
+    )}
+  </div>
+)}
 
             {job.resumeAnalysis?.score != null && (
               <div className="mt-4">
