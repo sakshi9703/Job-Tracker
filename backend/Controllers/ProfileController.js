@@ -1,7 +1,7 @@
 import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import Job from "../models/Job.js";
-import { parseResume } from "../services/resumeParser.js";
+import { parseResume } from "../Services/resumeParser.js";
 
 export const getProfile = async (req, res) => {
   try {
