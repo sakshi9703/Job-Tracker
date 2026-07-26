@@ -1,8 +1,6 @@
-import fs from "fs";
 import path from "path";
 import * as pdfParse from "pdf-parse";
 import mammoth from "mammoth";
-import WordExtractor from "word-extractor";
 
 const cleanResumeText = (text) =>
   text
@@ -10,29 +8,26 @@ const cleanResumeText = (text) =>
     .replace(/\s+/g, " ")
     .trim();
 
-export const parseResume = async (filePath) => {
-  const extension = path.extname(filePath).toLowerCase();
+export const parseResume = async (file) => {
+  const extension = path.extname(file.originalname).toLowerCase();
 
   if (extension === ".pdf") {
-    const buffer = fs.readFileSync(filePath);
-    const parser = new pdfParse.PDFParse({ data: buffer });
+    const parser = new pdfParse.PDFParse({
+      data: file.buffer,
+    });
+
     const result = await parser.getText();
 
     return cleanResumeText(result.text);
   }
 
   if (extension === ".docx") {
-    const result = await mammoth.extractRawText({ path: filePath });
+    const result = await mammoth.extractRawText({
+      buffer: file.buffer,
+    });
 
     return cleanResumeText(result.value);
   }
 
-  if (extension === ".doc") {
-    const extractor = new WordExtractor();
-    const document = await extractor.extract(filePath);
-
-    return cleanResumeText(document.getBody());
-  }
-
-  throw new Error("Unsupported resume format.");
+  throw new Error("Only PDF and DOCX resumes are supported.");
 };

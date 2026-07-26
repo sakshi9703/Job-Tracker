@@ -2,6 +2,8 @@ import User from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import Job from "../models/Job.js";
 import { parseResume } from "../Services/resumeParser.js";
+import cloudinary from "../Services/cloudinary.js";
+import uploadToCloudinary from "../util/uploadToCloudinary.js";
 
 export const getProfile = async (req, res) => {
   try {
@@ -42,7 +44,7 @@ export const updateUsername = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       req.userId,
       { username: username.trim() },
-      { new: true }
+      { new: true },
     ).select("-password");
 
     res.json({
@@ -64,10 +66,7 @@ export const updatePassword = async (req, res) => {
 
     const user = await User.findById(req.userId);
 
-    const isMatch = await bcrypt.compare(
-      currentPassword,
-      user.password
-    );
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
 
     if (!isMatch) {
       return res.status(400).json({
@@ -76,8 +75,8 @@ export const updatePassword = async (req, res) => {
       });
     }
 
-   user.password = newPassword;
-await user.save();
+    user.password = newPassword;
+    await user.save();
 
     res.json({
       success: true,
@@ -99,12 +98,18 @@ export const uploadResume = async (req, res) => {
       });
     }
 
-    const resumeText = await parseResume(req.file.path);
+    const resumeText = await parseResume(req.file);
+
+    const cloudinaryResult = await uploadToCloudinary(
+      req.file.buffer,
+      `users/${req.userId}/resume`,
+    );
 
     await User.findByIdAndUpdate(req.userId, {
       resumeText,
       resumeFileName: req.file.originalname,
-      resumePath: req.file.path.replace(/\\/g, "/"), // Save the file location
+      resumeUrl: cloudinaryResult.secure_url,
+      resumePublicId: cloudinaryResult.public_id,
       resumeUpdatedAt: new Date(),
     });
 
@@ -124,7 +129,7 @@ export const getResume = async (req, res) => {
   try {
     const user = await User.findById(req.userId);
 
-    if (!user.resumePath) {
+    if (!user.resumeUrl) {
       return res.json({ hasResume: false });
     }
 
@@ -132,9 +137,7 @@ export const getResume = async (req, res) => {
       hasResume: true,
       resumeFileName: user.resumeFileName,
       resumeUpdatedAt: user.resumeUpdatedAt,
-      resumeUrl: user.resumePath
-        ? `${import.meta.env.VITE_API_URL}/${user.resumePath}`
-        : null,
+      resumeUrl: user.resumeUrl,
     });
   } catch (err) {
     res.status(500).json({
@@ -145,18 +148,23 @@ export const getResume = async (req, res) => {
 
 export const deleteResume = async (req, res) => {
   try {
-    await User.findByIdAndUpdate(
-      req.userId,
-      {
-        $unset: {
-          resumePath: 1,
-          resumeFileName: 1,
-          resumeText: 1,
-          resumeUpdatedAt: 1,
-        },
+    const user = await User.findById(req.userId);
+
+    if (user.resumePublicId) {
+      await cloudinary.uploader.destroy(user.resumePublicId, {
+        resource_type: "raw",
+      });
+    }
+
+    await User.findByIdAndUpdate(req.userId, {
+      $unset: {
+        resumeUrl: 1,
+        resumePublicId: 1,
+        resumeFileName: 1,
+        resumeText: 1,
+        resumeUpdatedAt: 1,
       },
-      { new: true }
-    );
+    });
 
     return res.status(200).json({
       success: true,

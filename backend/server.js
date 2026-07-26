@@ -12,6 +12,7 @@ import { validate } from "./Middlewares/Validate.js";
 import aiRoutes from "./Routes/ai.js";
 import profileRoutes from "./Routes/ProfileRoute.js";
 import path from "path";
+import cloudinary from "./Services/cloudinary.js";
 
 const app = express();
 
