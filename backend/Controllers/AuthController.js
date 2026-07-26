@@ -6,8 +6,9 @@ import Job from "../models/Job.js";
 const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  maxAge: 3 * 24 * 60 * 60 * 1000,
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+  path: "/",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
 export const Signup = async (req, res) => {
@@ -31,15 +32,7 @@ export const Signup = async (req, res) => {
 
     const token = createSecretToken(user._id);
 
-   res.cookie("token", token, {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite:
-    process.env.NODE_ENV === "production"
-      ? "None"
-      : "Lax",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-});
+    res.cookie("token", token, cookieOptions);
 
     res.status(201).json({
       success: true,
@@ -69,6 +62,13 @@ export const Login = async (req, res) => {
 
     const user = await User.findOne({ email });
 
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Incorrect email or password",
+      });
+    }
+
     const auth = await bcrypt.compare(password, user.password);
 
     if (!auth) {
@@ -78,7 +78,7 @@ export const Login = async (req, res) => {
       });
     }
 
-        const token = createSecretToken(user._id);
+    const token = createSecretToken(user._id);
 
     res.cookie("token", token, cookieOptions);
 

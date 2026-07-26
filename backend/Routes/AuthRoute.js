@@ -10,7 +10,12 @@ router.post("/signup", validate(signupSchema), Signup);
 router.post("/login", validate(loginSchema), Login);
 router.post("/", userVerification);
 router.post("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+  path: "/",
+});
 
   res.json({
     success: true,
