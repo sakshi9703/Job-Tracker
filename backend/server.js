@@ -14,15 +14,21 @@ import profileRoutes from "./Routes/ProfileRoute.js";
 import path from "path";
 
 const app = express();
+
 const allowedOrigins = [
   "http://localhost:5173",
   "https://job-tracker-chi-five.vercel.app",
+  "https://job-tracker-pxlnlwcfa-sakshi-sinha.vercel.app",
 ];
 
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        origin === "http://localhost:5173" ||
+        origin.endsWith(".vercel.app")
+      ) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
@@ -59,16 +65,30 @@ app.get("/", (req, res) => {
 });
 
 app.get("/verify", userVerification, async (req, res) => {
-  const user = await User.findById(req.userId);
+  try {
+    const user = await User.findById(req.userId);
 
-  res.json({
-    success: true,
-  message: "Login successful",
-  user: user.username,
-  });
-  
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Login successful",
+      user: user.username,
+    });
+  } catch (err) {
+    console.error("Verify Error:", err);
+
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 });
-
 app.post("/jobs", validate(jobSchema), async (req, res) => {
   try {
     const newJob = new Job({ ...req.body, userId: req.userId });
