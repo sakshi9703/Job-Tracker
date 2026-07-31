@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import DashboardSkeleton from "../components/DashboardSkeleton.jsx";
 
 function ProtectedRoute({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -23,6 +24,10 @@ function ProtectedRoute({ children }) {
 
     verifyUser();
   }, []);
+
+  if (isAuthenticated === null) {
+    return <DashboardSkeleton />;
+  }
 
   return isAuthenticated
     ? children

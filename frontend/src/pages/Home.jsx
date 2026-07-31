@@ -5,7 +5,6 @@ import Dashboard from "../components/Dashboard.jsx";
 import Toolbar from "../components/Tools/Toolbar.jsx";
 import JobList from "../components/JobList/Joblist.jsx";
 import Pagination from "../components/Pagination.jsx";
-import DashboardSkeleton from "../components/DashboardSkeleton.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
