@@ -8,6 +8,7 @@ import Pagination from "../components/Pagination.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import DashboardSkeleton from "../components/DashboardSkeleton.jsx";
 import "./Home.css"
 
 function Home() {
