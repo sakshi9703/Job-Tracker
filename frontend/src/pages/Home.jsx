@@ -5,6 +5,7 @@ import Dashboard from "../components/Dashboard.jsx";
 import Toolbar from "../components/Tools/Toolbar.jsx";
 import JobList from "../components/JobList/Joblist.jsx";
 import Pagination from "../components/Pagination.jsx";
+import DashboardSkeleton from "../components/DashboardSkeleton.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -26,6 +27,10 @@ function Home() {
   const [jobList, setJobList] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [statsLoading, setStatsLoading] = useState(true);
+  const [userLoading, setUserLoading] = useState(true);
+  const [showInitialSkeleton, setShowInitialSkeleton] = useState(true);
+  const [username, setUsername] = useState("");
   const [sortOrder, setSortOrder] = useState("recent");
   const [debouncedSearchItem, setDebouncedSearchItem] = useState("");
   const [status, setStatus] = useState("All");
@@ -63,12 +68,28 @@ function Home() {
 
   const fetchStats = useCallback(async () => {
     try {
+      setStatsLoading(true);
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/jobs/stats`,
         { withCredentials: true, }
       );
       SetStats(res.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setStatsLoading(false);
+    }
+  }, []);
+
+  const fetchDashboardUser = useCallback(async () => {
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/profile`, {
+        withCredentials: true,
+      });
+      setUsername(data.user.username);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setUserLoading(false);
     }
   }, []);
 
@@ -79,6 +100,10 @@ function Home() {
   useEffect(() => {
     void fetchStats();
   }, [fetchStats]);
+
+  useEffect(() => {
+    void fetchDashboardUser();
+  }, [fetchDashboardUser]);
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -117,6 +142,27 @@ function Home() {
   const totalPages = Math.ceil(jobList.length / jobsperPage);
 
   const jobRef = useRef(null);
+  const scrollToJobList = () => {
+    jobRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleStatusSelect = (selectedStatus) => {
+    setStatus(selectedStatus);
+    setCurrentPage(1);
+    scrollToJobList();
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    scrollToJobList();
+  };
+
+  const isInitialDashboardLoading = loading || statsLoading || userLoading;
+  useEffect(() => {
+    if (!isInitialDashboardLoading) {
+      setShowInitialSkeleton(false);
+    }
+  }, [isInitialDashboardLoading]);
   useEffect(() => {
   const originalOverflow = document.body.style.overflow;
 
@@ -129,12 +175,18 @@ function Home() {
   };
 }, [showJobModal]);
 
+  if (showInitialSkeleton) {
+    return <DashboardSkeleton />;
+  }
+
   return (
     <>
       <Navbar removeCookie={removeCookie} navigate={navigate}></Navbar>
       <Dashboard
         jobList={jobList}
         stats={stats}
+        username={username}
+        onStatusSelect={handleStatusSelect}
         setEditingIndex={setEditingIndex}
         setFormData={setFormData}
         setShowJobModal={setShowJobModal}
@@ -185,7 +237,7 @@ function Home() {
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        onPageChange={handlePageChange}
       ></Pagination>
     </>
   );

@@ -114,6 +114,27 @@
   align-items: center;
 }
 
+.stat-row-button {
+  width: 100%;
+  padding: 0.35rem;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.stat-row-button:hover {
+  background: #f8fafc;
+  transform: translateX(2px);
+}
+
+.stat-row-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.45);
+  outline-offset: 2px;
+}
+
 .stat-info {
   display: flex;
   align-items: center;
@@ -294,4 +315,44 @@
     height: 52px;
     font-size: 0.9rem;
   }
+}
+
+.dashboard-skeleton-block {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #dbe3f0;
+}
+
+.dashboard-skeleton-block::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+  content: "";
+  transform: translateX(-100%);
+  animation: dashboard-shimmer 1.35s infinite;
+}
+
+@keyframes dashboard-shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.skeleton-navbar { background: #1e293b; padding: 1rem 0; }
+.skeleton-brand { width: 165px; height: 34px; background: #475569; }
+.skeleton-nav-link { width: 88px; height: 26px; background: #475569; }
+.skeleton-title { width: min(320px, 80%); height: 48px; margin-bottom: 0.75rem; }
+.skeleton-subtitle { width: min(390px, 90%); height: 24px; }
+.skeleton-icon { width: 56px; height: 56px; border-radius: 16px; }
+.skeleton-line { height: 16px; margin: 0.25rem 0; }
+.skeleton-line.short { width: 55%; }
+.skeleton-line.medium { width: 70%; }
+.skeleton-number { width: 64px; height: 30px; margin-top: 0.6rem; }
+.skeleton-section-title { width: 210px; height: 28px; margin-bottom: 0.8rem; }
+.skeleton-chart { width: min(310px, 78%); aspect-ratio: 1; margin: 2rem auto 0; border-radius: 50%; }
+.skeleton-stat-icon { width: 42px; height: 42px; border-radius: 12px; flex: 0 0 auto; }
+.skeleton-badge { width: 44px; height: 30px; border-radius: 999px; }
+.skeleton-action { width: min(270px, 100%); height: 58px; border-radius: 14px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-skeleton-block::after { animation: none; }
 }

@@ -16,19 +16,14 @@ import cloudinary from "./Services/cloudinary.js";
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://job-tracker-chi-five.vercel.app",
-  "https://job-tracker-pxlnlwcfa-sakshi-sinha.vercel.app",
-];
-
 app.use(
   cors({
     origin(origin, callback) {
       if (
         !origin ||
         origin === "http://localhost:5173" ||
-        origin.endsWith(".vercel.app")
+        origin === "http://localhost:4173" ||
+        origin.endsWith(".netlify.app")
       ) {
         callback(null, true);
       } else {

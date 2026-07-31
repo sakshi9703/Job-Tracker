@@ -9,14 +9,10 @@ import {
 } from "react-icons/fi";
 import Analytics from "./Analytics/Analytics";
 import "../App.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
 
 
-export default function Dashboard({ jobList, stats, setEditingIndex, setFormData, setShowJobModal }) {
-  const [username, setUsername] = useState("");
+export default function Dashboard({ jobList, stats, username, onStatusSelect, setEditingIndex, setFormData, setShowJobModal }) {
   const navigate = useNavigate();
 
   const statItems = [
@@ -51,25 +47,6 @@ export default function Dashboard({ jobList, stats, setEditingIndex, setFormData
       className: "rejected",
     },
   ];
-
-  useEffect(() => {
-    const fetchUsername = async () => {
-      try {
-        const { data } = await api.get("/jobs");
-
-        if (data.user) {
-          setUsername(
-            data.user.charAt(0).toUpperCase() +
-              data.user.slice(1)
-          );
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchUsername();
-  }, []);
 
   return (
     <div className="dashboard-page">
@@ -114,7 +91,7 @@ export default function Dashboard({ jobList, stats, setEditingIndex, setFormData
               <p>Distribution of your application statuses</p>
             </div>
 
-            <Analytics stats={stats} />
+            <Analytics stats={stats} onStatusSelect={onStatusSelect} />
           </div>
 
           {/* Statistics */}
@@ -126,7 +103,12 @@ export default function Dashboard({ jobList, stats, setEditingIndex, setFormData
 
             <div className="stats-list">
               {statItems.map((item) => (
-                <div key={item.label} className="stat-row">
+                <button
+                  key={item.label}
+                  type="button"
+                  className="stat-row stat-row-button"
+                  onClick={() => onStatusSelect(item.label)}
+                >
                   <div className="stat-info">
                     <div className={`stat-icon ${item.className}`}>
                       {item.icon}
@@ -138,7 +120,7 @@ export default function Dashboard({ jobList, stats, setEditingIndex, setFormData
                   <span className={`stat-badge ${item.className}`}>
                     {item.value}
                   </span>
-                </div>
+                </button>
               ))}
             </div>
           </div>

@@ -4,6 +4,7 @@ import Job from "../models/Job.js";
 import { parseResume } from "../Services/resumeParser.js";
 import cloudinary from "../Services/cloudinary.js";
 import uploadToCloudinary from "../util/uploadToCloudinary.js";
+import { Readable } from "node:stream";
 
 export const getProfile = async (req, res) => {
   try {
@@ -100,11 +101,23 @@ export const uploadResume = async (req, res) => {
 
     const resumeText = await parseResume(req.file);
 
+    const user = await User.findById(req.userId);
+
+    // Delete previous resume if it exists
+    if (user.resumePublicId) {
+      await cloudinary.uploader.destroy(user.resumePublicId, {
+        resource_type: "raw",
+      });
+    }
+
+    // Upload new resume
     const cloudinaryResult = await uploadToCloudinary(
       req.file.buffer,
-      `users/${req.userId}/resume`,
+      `users/${req.userId}`,
+      "resume",
     );
 
+    // Update database
     await User.findByIdAndUpdate(req.userId, {
       resumeText,
       resumeFileName: req.file.originalname,
@@ -117,7 +130,7 @@ export const uploadResume = async (req, res) => {
       message: "Resume uploaded successfully",
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
 
     res.status(500).json({
       message: err.message,
@@ -143,6 +156,37 @@ export const getResume = async (req, res) => {
     res.status(500).json({
       message: err.message,
     });
+  }
+};
+
+export const downloadResume = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select(
+      "resumeUrl resumeFileName",
+    );
+
+    if (!user?.resumeUrl) {
+      return res.status(404).json({ message: "No resume uploaded" });
+    }
+
+    const response = await fetch(user.resumeUrl);
+    if (!response.ok || !response.body) {
+      throw new Error("Unable to retrieve resume from storage");
+    }
+
+    const fileName = (user.resumeFileName || "resume").replace(/[\\\r\n\"]/g, "_");
+    const contentType = response.headers.get("content-type") || "application/octet-stream";
+
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Content-Disposition", `inline; filename="${fileName}"`);
+    res.setHeader("X-Content-Type-Options", "nosniff");
+
+    Readable.fromWeb(response.body).pipe(res);
+  } catch (err) {
+    console.error(err);
+    if (!res.headersSent) {
+      res.status(500).json({ message: "Failed to download resume" });
+    }
   }
 };
 

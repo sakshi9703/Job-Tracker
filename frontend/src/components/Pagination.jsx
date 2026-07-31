@@ -1,4 +1,4 @@
-export default function Pagination({ totalPages, currentPage, setCurrentPage }) {
+export default function Pagination({ totalPages, currentPage, onPageChange }) {
   return (
     <nav className="mt-4">
       <ul className="pagination justify-content-center">
@@ -6,7 +6,7 @@ export default function Pagination({ totalPages, currentPage, setCurrentPage }) 
           <button
             className="page-link"
             disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
+            onClick={() => onPageChange(currentPage - 1)}
           >
             Previous
           </button>
@@ -17,7 +17,7 @@ export default function Pagination({ totalPages, currentPage, setCurrentPage }) 
             key={i}
             className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
           >
-            <button className="page-link" onClick={() => setCurrentPage(i + 1)}>
+            <button className="page-link" onClick={() => onPageChange(i + 1)}>
               {i + 1}
             </button>
           </li>
@@ -29,7 +29,7 @@ export default function Pagination({ totalPages, currentPage, setCurrentPage }) 
           <button
             className="page-link"
             disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(currentPage + 1)}
+            onClick={() => onPageChange(currentPage + 1)}
           >
             Next
           </button>

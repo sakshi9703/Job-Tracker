@@ -24,10 +24,6 @@ function ProtectedRoute({ children }) {
     verifyUser();
   }, []);
 
-  if (isAuthenticated === null) {
-    return <p>Loading...</p>;
-  }
-
   return isAuthenticated
     ? children
     : <Navigate to="/login" replace />;

@@ -6,6 +6,7 @@ import {
   updatePassword,
   uploadResume,
   getResume,
+  downloadResume,
   deleteResume,
 } from "../Controllers/ProfileController.js";
 import upload from "../Middlewares/Upload.js";
@@ -22,6 +23,7 @@ router.post(
   uploadResume,
 );
 router.get("/upload-resume", userVerification, getResume);
+router.get("/download-resume", userVerification, downloadResume);
 router.delete("/delete-resume", userVerification, deleteResume);
 
 export default router;

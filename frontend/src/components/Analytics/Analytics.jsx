@@ -9,7 +9,7 @@ import {
 
 import "./Analytics.css";
 
-function Analytics({ stats }) {
+function Analytics({ stats, onStatusSelect }) {
   const allData = [
     {
       name: "Applied",
@@ -111,11 +111,14 @@ function Analytics({ stats }) {
               strokeWidth={3}
               rootTabIndex={-1}
               isAnimationActive
+              onClick={(entry) => onStatusSelect(entry.name)}
+              style={{ cursor: "pointer" }}
             >
               {chartData.map((item) => (
                 <Cell
                   key={item.name}
                   fill={item.color}
+                  cursor="pointer"
                 />
               ))}
             </Pie>

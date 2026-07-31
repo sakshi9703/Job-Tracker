@@ -99,27 +99,12 @@ export default function Profile() {
     }
   };
 
-  const confirmDownloadResume = async () => {
-    const { isConfirmed } = await Swal.fire({
-      title: "Download resume",
-      text: `Download ${resume.resumeFileName}?`,
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Download",
-      cancelButtonText: "Cancel",
-      confirmButtonColor: "#059669",
-      background: "#334155",
-      color: "#f8fafc",
-    });
-
-    if (isConfirmed) {
-      const link = document.createElement("a");
-      link.href = resume.resumeUrl;
-      link.download = resume.resumeFileName;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }
+  const downloadResume = () => {
+    window.open(
+      `${import.meta.env.VITE_API_URL}/profile/download-resume`,
+      "_blank",
+      "noopener,noreferrer",
+    );
   };
 
   useEffect(() => {
@@ -240,19 +225,10 @@ export default function Profile() {
                 </div>
 
                 <div className="resume-actions">
-                  <a
-                    href={resume.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="resume-action-btn view"
-                  >
-                    View
-                  </a>
-
                   <button
                     type="button"
                     className="resume-action-btn download"
-                    onClick={confirmDownloadResume}
+                    onClick={downloadResume}
                   >
                     Download
                   </button>

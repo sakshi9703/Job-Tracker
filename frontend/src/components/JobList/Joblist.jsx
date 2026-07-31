@@ -148,6 +148,7 @@ export default function JobList({
 
   return (
     <div className="container py-4" ref={jobRef}>
+      <h2 className="job-list-heading">Job List</h2>
       {loading && (
         <div className="empty-state">
           <h4>Loading jobs...</h4>
