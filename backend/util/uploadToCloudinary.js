@@ -7,10 +7,8 @@ const uploadToCloudinary = (fileBuffer, folder, publicId) => {
       {
         folder,
         public_id: publicId,
-        resource_type: "auto",
+        resource_type: "raw",
         overwrite: true,
-        use_filename: true,
-    unique_filename: false,
       },
       (error, result) => {
         if (error) return reject(error);

@@ -170,6 +170,7 @@ export const downloadResume = async (req, res) => {
     }
 
     const response = await fetch(user.resumeUrl);
+
     if (!response.ok || !response.body) {
       throw new Error("Unable to retrieve resume from storage");
     }
