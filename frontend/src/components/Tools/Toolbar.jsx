@@ -3,6 +3,7 @@ import {
   FiSearch,
   FiFilter,
   FiArrowUp,
+  FiSliders
 } from "react-icons/fi";
 
 import "./Toolbar.css";
@@ -41,7 +42,7 @@ export default function Toolbar({
         {/* Search */}
 
         <div className="search-wrapper">
-          <FiSearch className="toolbar-icon" />
+          <FiSliders className="toolbar-icon" />
 
           <input
             type="text"
@@ -54,38 +55,40 @@ export default function Toolbar({
 
         {/* Controls */}
 
-        <div className="toolbar-controls">
-          <div className="select-wrapper">
-            <FiArrowUp className="toolbar-icon" />
+<div className="toolbar-controls">
 
-            <select
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
-              className="toolbar-select"
-            >
-              <option value="recent">Recently Added</option>
-              <option value="newest">Newest First</option>
-              <option value="oldest">Oldest First</option>
-            </select>
-          </div>
+  <div className="select-wrapper">
+    <FiFilter className="toolbar-icon" />
 
-          <div className="select-wrapper">
-            <FiFilter className="toolbar-icon" />
+    <select
+      value={status}
+      onChange={handleSelected}
+      className="toolbar-select"
+    >
+      <option value="All">All Statuses</option>
+      <option value="Interested">Interested</option>
+      <option value="Applied">Applied</option>
+      <option value="Interview">Interview</option>
+      <option value="Accepted">Accepted</option>
+      <option value="Rejected">Rejected</option>
+    </select>
+  </div>
 
-            <select
-              value={status}
-              onChange={handleSelected}
-              className="toolbar-select"
-            >
-              <option value="All">All Statuses</option>
-              <option value="Interested">Interested</option>
-              <option value="Applied">Applied</option>
-              <option value="Interview">Interview</option>
-              <option value="Accepted">Accepted</option>
-              <option value="Rejected">Rejected</option>
-            </select>
-          </div>
-        </div>
+  <div className="select-wrapper">
+    <FiArrowUp className="toolbar-icon" />
+
+    <select
+      value={sortOrder}
+      onChange={(e) => setSortOrder(e.target.value)}
+      className="toolbar-select"
+    >
+      <option value="recent">Recently Added</option>
+      <option value="newest">Newest First</option>
+      <option value="oldest">Oldest First</option>
+    </select>
+  </div>
+
+</div>
       </div>
     </div>
   );

@@ -1,97 +1,463 @@
-.form-section {
-  background: #1e293b;
-}
+/* =========================================================
+   JOB APPLICATION FORM
+========================================================= */
 
 .job-form-card {
-  background: #334155;
-  border: 1px solid #475569;
-  border-radius: 24px;
-  padding: 32px;
+  width: 100%;
+  box-sizing: border-box;
 
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.35);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
 
-  animation: fadeUp 0.4s ease;
+  padding: 1.5rem;
+
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+
+  animation: formFadeUp 0.25s ease;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.form-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin-bottom: 1.4rem;
+  padding-bottom: 1.1rem;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.form-header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.form-header-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: #f0fdf4;
+  color: #166534;
+
+  font-size: 1.05rem;
 }
 
 .form-title {
-  color: #f8fafc;
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-.form-subtitle {
-  color: #cbd5e1;
   margin: 0;
+
+  color: #0f172a;
+
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
 }
 
-.job-label {
-  color: #e2e8f0;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+.form-subtitle {
+  margin: 0.2rem 0 0;
+
+  color: #64748b;
+
+  font-size: 0.82rem;
+  line-height: 1.45;
 }
 
-.job-input {
-  background: #475569 !important;
-  border: 1px solid #64748b !important;
-  color: #f8fafc !important;
+.form-close-btn {
+  width: 32px;
+  height: 32px;
 
-  border-radius: 14px !important;
-  padding: 0.85rem 1rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #94a3b8;
+
+  font-size: 1rem;
+
+  cursor: pointer;
 
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    background-color 0.18s ease,
+    color 0.18s ease;
 }
 
-.job-input::placeholder {
-  color: #94a3b8;
+.form-close-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  color: #0f172a;
 }
+
+.form-close-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.job-form {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  column-gap: 1rem;
+  row-gap: 1rem;
+}
+
+.form-field {
+  min-width: 0;
+}
+
+.form-field-wide {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   LABELS
+========================================================= */
+
+.job-label {
+  display: flex;
+  align-items: center;
+
+  gap: 0.3rem;
+
+  margin-bottom: 0.4rem;
+
+  color: #334155;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.optional {
+  margin-left: auto;
+
+  color: #94a3b8;
+
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   INPUT WRAPPERS
+========================================================= */
+
+.form-input-wrapper,
+.textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.field-icon {
+  position: absolute;
+
+  left: 0.8rem;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #94a3b8;
+
+  font-size: 0.9rem;
+
+  pointer-events: none;
+
+  z-index: 2;
+
+  transition: color 0.18s ease;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.job-input {
+  display: block;
+
+  width: 100%;
+  min-height: 42px;
+
+  box-sizing: border-box;
+
+  padding: 0.65rem 0.8rem 0.65rem 2.3rem;
+
+  background: #ffffff !important;
+
+  border: 1px solid #cbd5e1 !important;
+
+  border-radius: 10px !important;
+
+  outline: none !important;
+
+  color: #0f172a !important;
+
+  font-family: inherit;
+
+  font-size: 0.84rem;
+
+  line-height: 1.4;
+
+  box-shadow: none !important;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+/* Placeholder */
+
+.job-input::placeholder {
+  color: #94a3b8 !important;
+  opacity: 1;
+}
+
+
+/* Hover */
 
 .job-input:hover {
   border-color: #94a3b8 !important;
 }
 
+
+/* Focus */
+
 .job-input:focus {
-  border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2) !important;
+  background: #ffffff !important;
+
+  border-color: #22c55e !important;
+
+  box-shadow:
+    0 0 0 3px rgba(34, 197, 94, 0.1) !important;
 }
 
-.job-input option {
-  background: #334155;
-  color: #f8fafc;
+
+/* Icon focus */
+
+.form-input-wrapper:focus-within .field-icon,
+.textarea-wrapper:focus-within .field-icon {
+  color: #166534;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.form-select-wrapper {
+  position: relative;
+}
+
+.job-select {
+  width: 100%;
+  appearance: auto;
+  -webkit-appearance: auto;
+  cursor: pointer;
+  padding-left: 2.3rem !important;
+  padding-right: 0.8rem !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+.job-select option {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.job-input[type="date"] {
+  cursor: pointer;
+
+  padding-right: 0.8rem;
 }
 
 .job-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
   cursor: pointer;
+  opacity: 0.55;
 }
 
-.job-input:-webkit-autofill,
-.job-input:-webkit-autofill:hover,
-.job-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px #475569 inset !important;
-  -webkit-text-fill-color: #f8fafc !important;
+.job-input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.9;
 }
 
-.submit-btn {
-  background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
-  border: none !important;
 
-  color: white;
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+.textarea-wrapper .field-icon {
+  top: 0.9rem;
+
+  transform: none;
+}
+
+.job-textarea {
+  min-height: 115px;
+
+  resize: vertical;
+
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.form-actions {
+  grid-column: 1 / -1;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 0.65rem;
+
+  margin-top: 0.2rem;
+  padding-top: 1rem;
+
+  border-top: 1px solid #f1f5f9;
+}
+
+
+/* =========================================================
+   CANCEL
+========================================================= */
+
+.cancel-btn {
+  min-height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.4rem;
+
+  padding: 0.6rem 0.9rem;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #475569;
+
+  font-family: inherit;
+
+  font-size: 0.82rem;
   font-weight: 600;
 
-  border-radius: 14px !important;
-  padding: 0.9rem !important;
+  cursor: pointer;
 
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #f8fafc;
+
+  border-color: #94a3b8;
+
+  color: #0f172a;
+
+  transform: translateY(-1px);
+}
+
+.cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.submit-btn {
+  min-height: 40px;
+
+  min-width: 165px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.4rem;
+
+  padding: 0.6rem 1rem;
+
+  border: 1px solid #166534 !important;
+  border-radius: 9px !important;
+
+  background: #166534 !important;
+
+  color: #ffffff !important;
+
+  font-family: inherit;
+
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow: none;
+
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .submit-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
+  background: #14532d !important;
+  border-color: #14532d !important;
 
-  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.35);
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 10px rgba(22, 101, 52, 0.15);
 }
 
 .submit-btn:active:not(:disabled) {
@@ -99,32 +465,65 @@
 }
 
 .submit-btn:disabled {
-  opacity: 0.75;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
-.cancel-btn{
 
-    padding:12px 22px;
+/* =========================================================
+   SPINNER
+========================================================= */
 
-    border-radius:12px;
+.form-spinner {
+  width: 14px;
+  height: 14px;
 
-    border:1px solid #64748b;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
 
-    background:transparent;
+  border-radius: 50%;
 
-    color:#cbd5e1;
+  animation: formSpin 0.7s linear infinite;
 }
 
-.cancel-btn:hover{
 
-    background:#475569;
+/* =========================================================
+   AUTOFILL
+========================================================= */
+
+.job-input:-webkit-autofill,
+.job-input:-webkit-autofill:hover,
+.job-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #0f172a !important;
+
+  -webkit-box-shadow:
+    0 0 0 1000px #ffffff inset !important;
+
+  box-shadow:
+    0 0 0 1000px #ffffff inset !important;
 }
 
-@keyframes fadeUp {
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+.form-close-btn:focus-visible,
+.cancel-btn:focus-visible,
+.submit-btn:focus-visible {
+  outline: 3px solid rgba(34, 197, 94, 0.18);
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes formFadeUp {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(6px);
   }
 
   to {
@@ -133,14 +532,92 @@
   }
 }
 
-@media (max-width: 768px) {
-  .job-form-card {
-    padding: 22px;
-    border-radius: 20px;
-  }
-
-  .form-title {
-    font-size: 1.5rem;
+@keyframes formSpin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+  .job-form-card {
+    padding: 1.25rem;
+    border-radius: 15px;
+  }
+
+  .job-form {
+    grid-template-columns: 1fr;
+    row-gap: 0.9rem;
+  }
+
+  .form-field-wide {
+    grid-column: auto;
+  }
+
+  .form-actions {
+    grid-column: auto;
+
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .cancel-btn,
+  .submit-btn {
+    width: 100%;
+  }
+
+  .submit-btn {
+    min-width: 0;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .job-form-card {
+    padding: 1rem;
+    border-radius: 14px;
+  }
+
+  .form-header {
+    margin-bottom: 1.15rem;
+  }
+
+  .form-header-content {
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .form-header-icon {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 9px;
+
+    font-size: 0.95rem;
+  }
+
+  .form-title {
+    font-size: 1rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.76rem;
+  }
+
+  .job-input {
+    min-height: 40px;
+    font-size: 0.82rem;
+  }
+
+  .job-textarea {
+    min-height: 105px;
+  }
+}

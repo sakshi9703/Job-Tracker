@@ -1,0 +1,285 @@
+/* ========================================
+   NAVBAR
+======================================== */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border-bottom: 1px solid #e2e8f0;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* ========================================
+   INNER CONTAINER
+======================================== */
+
+.navbar-inner {
+  width: min(1280px, calc(100% - 48px));
+
+  height: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+/* ========================================
+   BRAND
+======================================== */
+
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  text-decoration: none;
+
+  color: #0f172a !important;
+
+  font-size: 1rem;
+  font-weight: 750;
+
+  letter-spacing: -0.025em;
+
+  transition: opacity 0.2s ease;
+}
+
+.navbar-brand:hover {
+  opacity: 0.85;
+}
+
+
+/* Brand square */
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #166534;
+
+  color: #ffffff;
+
+  font-size: 0.9rem;
+  font-weight: 750;
+
+  box-shadow: 0 4px 10px rgba(22, 101, 52, 0.16);
+}
+
+
+/* Brand text */
+
+.brand-text {
+  color: #0f172a;
+}
+
+.brand-text span {
+  color: #166534;
+}
+
+
+/* ========================================
+   NAVIGATION ACTIONS
+======================================== */
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 0.45rem;
+}
+
+
+/* ========================================
+   PROFILE
+======================================== */
+
+.navbar-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+
+  padding: 0.5rem 0.75rem;
+
+  border-radius: 9px;
+
+  color: #475569 !important;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.navbar-profile svg {
+  font-size: 1rem;
+}
+
+.navbar-profile:hover {
+  color: #166534 !important;
+  background: #f0fdf4;
+}
+
+
+/* Active profile */
+
+.navbar-profile.active {
+  color: #166534 !important;
+  background: #f0fdf4;
+}
+
+
+/* ========================================
+   LOGOUT
+======================================== */
+
+.navbar-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.45rem;
+
+  padding: 0.5rem 0.75rem;
+
+  border: none;
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-family: inherit;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.navbar-logout svg {
+  font-size: 1rem;
+}
+
+.navbar-logout:hover {
+  color: #dc2626;
+
+  background: #fef2f2;
+}
+
+
+/* ========================================
+   FOCUS STATES
+======================================== */
+
+.navbar-brand:focus-visible,
+.navbar-profile:focus-visible,
+.navbar-logout:focus-visible {
+  outline: 3px solid rgba(34, 197, 94, 0.18);
+  outline-offset: 2px;
+}
+
+
+/* ========================================
+   LOGOUT SWEETALERT
+======================================== */
+
+.logout-popup {
+  border-radius: 18px !important;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+  .navbar {
+    height: 60px;
+  }
+
+  .navbar-inner {
+    width: calc(100% - 32px);
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 8px;
+  }
+
+  .brand-text {
+    font-size: 0.95rem;
+  }
+
+  .navbar-actions {
+    gap: 0.2rem;
+  }
+
+  .navbar-profile,
+  .navbar-logout {
+    padding: 0.45rem 0.55rem;
+
+    font-size: 0.8rem;
+  }
+}
+
+
+/* ========================================
+   VERY SMALL SCREENS
+======================================== */
+
+@media (max-width: 400px) {
+  .navbar-inner {
+    width: calc(100% - 24px);
+  }
+
+  .navbar-profile span,
+  .navbar-logout span {
+    display: none;
+  }
+
+  .navbar-profile,
+  .navbar-logout {
+    width: 36px;
+    height: 36px;
+
+    padding: 0;
+
+    justify-content: center;
+  }
+
+  .navbar-profile svg,
+  .navbar-logout svg {
+    font-size: 1.05rem;
+  }
+}

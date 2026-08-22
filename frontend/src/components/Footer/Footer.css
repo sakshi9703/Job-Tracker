@@ -1,0 +1,120 @@
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.site-footer {
+  width: 100%;
+
+  margin-top: 3rem;
+
+  background: #166534;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.footer-container {
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 1.5rem 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 0.55rem;
+}
+
+.footer-brand-mark {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #166534;
+
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.footer-brand-name {
+  color: #ffffff;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  letter-spacing: -0.01em;
+}
+
+
+/* =========================================================
+   TAGLINE
+========================================================= */
+
+.footer-tagline {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.8);
+
+  font-size: 0.8rem;
+}
+
+
+/* =========================================================
+   COPYRIGHT
+========================================================= */
+
+.footer-copyright {
+  margin: 0;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+  .footer-container {
+    padding: 1.25rem 1rem;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    text-align: center;
+
+    gap: 0.5rem;
+  }
+
+  .footer-brand {
+    justify-content: center;
+  }
+}

@@ -21,9 +21,9 @@ const jobSchema = new mongoose.Schema({
   default: Date.now,
 },
   date: {
-    type: String,
-    required: true,
-  },
+  type: Date,
+  required: true,
+},
   location: {
     type: String,
     required: true,

@@ -1,3 +1,4 @@
+import { FiCpu } from "react-icons/fi";
 import "./AILoadingModal.css";
 
 export default function AILoadingModal({
@@ -7,46 +8,78 @@ export default function AILoadingModal({
   if (!open) return null;
 
   return (
-    <div className="ai-loading-overlay">
+    <div
+      className="ai-loading-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ai-loading-title"
+    >
       <div className="ai-loading-modal">
+        {/* Header */}
+        <div className="ai-loading-header">
+          <div className="ai-loading-icon">
+            <FiCpu />
+          </div>
 
-        <h2>{title}</h2>
-
-        <p>Analyzing your resume...</p>
-
-        <div className="progress-row">
-            <span>Comparing Skills</span>
-            <div className="loading-bar">
-                <div className="loading-fill fill1"></div>
-            </div>
+          <div>
+            <h2 id="ai-loading-title">{title}</h2>
+            <p>Analyzing your resume and preparing insights.</p>
+          </div>
         </div>
 
-        <div className="progress-row">
-            <span>Matching Experience</span>
-            <div className="loading-bar">
-                <div className="loading-fill fill2"></div>
+        {/* Progress */}
+        <div className="ai-progress-list">
+
+          <div className="ai-progress-row">
+            <div className="ai-progress-label">
+              <span>Comparing Skills</span>
+              <span className="ai-progress-status">Processing</span>
             </div>
+
+            <div className="ai-loading-bar">
+              <div className="ai-loading-fill fill-1" />
+            </div>
+          </div>
+
+          <div className="ai-progress-row">
+            <div className="ai-progress-label">
+              <span>Matching Experience</span>
+              <span className="ai-progress-status">Processing</span>
+            </div>
+
+            <div className="ai-loading-bar">
+              <div className="ai-loading-fill fill-2" />
+            </div>
+          </div>
+
+          <div className="ai-progress-row">
+            <div className="ai-progress-label">
+              <span>Evaluating Education</span>
+              <span className="ai-progress-status">Processing</span>
+            </div>
+
+            <div className="ai-loading-bar">
+              <div className="ai-loading-fill fill-3" />
+            </div>
+          </div>
+
+          <div className="ai-progress-row">
+            <div className="ai-progress-label">
+              <span>Generating Suggestions</span>
+              <span className="ai-progress-status">Processing</span>
+            </div>
+
+            <div className="ai-loading-bar">
+              <div className="ai-loading-fill fill-4" />
+            </div>
+          </div>
+
         </div>
 
-        <div className="progress-row">
-            <span>Evaluating Education</span>
-            <div className="loading-bar">
-                <div className="loading-fill fill3"></div>
-            </div>
+        <div className="ai-loading-note">
+          This usually takes 5–15 seconds.
         </div>
-
-        <div className="progress-row">
-            <span>Generating Suggestions</span>
-            <div className="loading-bar">
-                <div className="loading-fill fill4"></div>
-            </div>
-        </div>
-
-        <p className="loading-note">
-            This usually takes 5–15 seconds.
-        </p>
-
+      </div>
     </div>
-</div>
   );
 }

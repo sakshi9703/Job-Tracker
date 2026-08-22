@@ -1,12 +1,13 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import DashboardSkeleton from "../components/DashboardSkeleton.jsx";
 
 function ProtectedRoute({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const verifyUser = async () => {
       try {
         const { data } = await axios.get(
@@ -16,22 +17,39 @@ function ProtectedRoute({ children }) {
           }
         );
 
-        setIsAuthenticated(data.success);
-      } catch {
-        setIsAuthenticated(false);
+        if (isMounted) {
+          setIsAuthenticated(data.success);
+        }
+      } catch (error) {
+        if (isMounted) {
+          setIsAuthenticated(false);
+        }
       }
     };
 
     verifyUser();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
+  // Authentication is still being checked
   if (isAuthenticated === null) {
-    return <DashboardSkeleton />;
+    return (
+      <div className="auth-check-loading">
+        <div className="auth-check-spinner" />
+      </div>
+    );
   }
 
-  return isAuthenticated
-    ? children
-    : <Navigate to="/login" replace />;
+  // User is not authenticated
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // User is authenticated
+  return children;
 }
 
 export default ProtectedRoute;

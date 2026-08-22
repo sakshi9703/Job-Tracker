@@ -31,7 +31,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
@@ -85,15 +85,44 @@ app.get("/verify", userVerification, async (req, res) => {
     });
   }
 });
-app.post("/jobs", validate(jobSchema), async (req, res) => {
+app.post("/jobs", validate(jobSchema), async (req, res, next) => {
   try {
-    const newJob = new Job({ ...req.body, userId: req.userId });
+    const { status, date } = req.body;
+
+    const selectedDate = new Date(date);
+
+    if (Number.isNaN(selectedDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid date",
+      });
+    }
+
+    // Interested jobs must have a future date
+    if (status === "Interested") {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      selectedDate.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        return res.status(400).json({
+          success: false,
+          message: "The apply-by date cannot be in the past.",
+        });
+      }
+    }
+
+    const newJob = new Job({
+      ...req.body,
+      userId: req.userId,
+    });
 
     await newJob.save();
 
     res.status(201).json(newJob);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     next(err);
   }
 });
@@ -121,22 +150,47 @@ app.put("/jobs/:id", async (req, res) => {
       });
     }
 
+    const status = req.body.status ?? job.status;
+    const date = req.body.date ?? job.date;
+
+    const selectedDate = new Date(date);
+
+    if (Number.isNaN(selectedDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid date",
+      });
+    }
+
+    if (status === "Interested") {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      selectedDate.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        return res.status(400).json({
+          success: false,
+          message: "The apply-by date cannot be in the past.",
+        });
+      }
+    }
+
     // Update description timestamp only if description changed
     if (
-      req.body.description &&
+      req.body.description !== undefined &&
       job.description !== req.body.description
     ) {
       job.descriptionUpdatedAt = new Date();
     }
 
-    // Update other fields
     Object.assign(job, req.body);
 
     await job.save();
 
     res.status(200).json(job);
   } catch (err) {
-    console.log(err);
+    console.error(err);
 
     res.status(500).json({
       message: "Failed to update job",
@@ -166,7 +220,7 @@ app.get("/jobs/stats", async (req, res) => {
       interview,
       accepted,
       rejected,
-      interested
+      interested,
     });
   } catch (err) {
     next(err);
@@ -199,23 +253,23 @@ app.get("/jobs", async (req, res) => {
     // Sorting
     let sortOption = {};
 
-switch (sort) {
-  case "recent":
-    // Recently added to the tracker
-    sortOption = { createdAt: -1 };
-    break;
+    switch (sort) {
+      case "recent":
+        // Recently added to the tracker
+        sortOption = { createdAt: -1 };
+        break;
 
-  case "oldest":
-    // Oldest application date
-    sortOption = { date: 1 };
-    break;
+      case "oldest":
+        // Oldest application date
+        sortOption = { date: 1 };
+        break;
 
-  case "newest":
-  default:
-    // Newest application date
-    sortOption = { date: -1 };
-    break;
-}
+      case "newest":
+      default:
+        // Newest application date
+        sortOption = { date: -1 };
+        break;
+    }
 
     // Fetch user
     const user = await User.findById(req.userId);
@@ -223,70 +277,50 @@ switch (sort) {
     // Fetch jobs
     const jobs = await Job.find(query).sort(sortOption);
 
-const jobsWithStatus = jobs.map((job) => {
-  const hasAnalysis =
-    typeof job.resumeAnalysis?.score === "number" &&
-    !!job.resumeAnalysis?.analyzedAt;
+    const jobsWithStatus = jobs.map((job) => {
+      const hasAnalysis =
+        typeof job.resumeAnalysis?.score === "number" &&
+        !!job.resumeAnalysis?.analyzedAt;
 
-  let needsReanalysis = true;
+      let needsReanalysis = true;
 
-  if (hasAnalysis) {
-    needsReanalysis = false;
+      if (hasAnalysis) {
+        needsReanalysis = false;
 
-    if (
-      user.resumeUpdatedAt &&
-      job.resumeAnalysis.analyzedAt < user.resumeUpdatedAt
-    ) {
-      needsReanalysis = true;
-    }
+        if (
+          user.resumeUpdatedAt &&
+          job.resumeAnalysis.analyzedAt < user.resumeUpdatedAt
+        ) {
+          needsReanalysis = true;
+        }
 
-    if (
-      job.descriptionUpdatedAt &&
-      job.resumeAnalysis.analyzedAt < job.descriptionUpdatedAt
-    ) {
-      needsReanalysis = true;
-    }
-  }
+        if (
+          job.descriptionUpdatedAt &&
+          job.resumeAnalysis.analyzedAt < job.descriptionUpdatedAt
+        ) {
+          needsReanalysis = true;
+        }
+      }
 
-  const hasQuestions =
-    !!job.interviewQuestions?.generatedAt;
+      const hasQuestions = !!job.interviewQuestions?.generatedAt;
 
-  const needsQuestionRegeneration =
-    !hasQuestions ||
-    (user.resumeUpdatedAt &&
-      job.interviewQuestions?.generatedAt < user.resumeUpdatedAt) ||
-    (job.descriptionUpdatedAt &&
-      job.interviewQuestions?.generatedAt < job.descriptionUpdatedAt);
+      const needsQuestionRegeneration =
+        !hasQuestions ||
+        (user.resumeUpdatedAt &&
+          job.interviewQuestions?.generatedAt < user.resumeUpdatedAt) ||
+        (job.descriptionUpdatedAt &&
+          job.interviewQuestions?.generatedAt < job.descriptionUpdatedAt);
 
-  return {
-    ...job.toObject(),
-    hasAnalysis,
-    needsReanalysis,
-    hasQuestions,
-    needsQuestionRegeneration,
-  };
-});
+      return {
+        ...job.toObject(),
+        hasAnalysis,
+        needsReanalysis,
+        hasQuestions,
+        needsQuestionRegeneration,
+      };
+    });
 
-return res.status(200).json(jobsWithStatus);
-
-    const jobsWithGenratedQuestions = jobs.map((job) =>{
-      const hasQuestions =
-  !!job.interviewQuestions?.generatedAt;
-
-const needsQuestionRegeneration =
-  !hasQuestions ||
-  (user.resumeUpdatedAt &&
-    job.interviewQuestions.generatedAt < user.resumeUpdatedAt) ||
-  (job.descriptionUpdatedAt &&
-    job.interviewQuestions.generatedAt < job.descriptionUpdatedAt);
-
-return {
-  ...job.toObject(),
-  hasQuestions,
-  needsQuestionRegeneration,
-};
-    })
-    res.status(200).json(jobsWithAnalysisStatus, jobsWithGenratedQuestions);
+    return res.status(200).json(jobsWithStatus);
   } catch (err) {
     console.error(err);
 

@@ -1,0 +1,504 @@
+/* =========================================
+   DASHBOARD
+========================================= */
+
+.dashboard-page {
+  background: #f4f7f5;
+  padding: 2.5rem 2rem 4rem;
+}
+
+.dashboard-container {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.dashboard-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.dashboard-header-content {
+  min-width: 0;
+}
+
+.dashboard-greeting {
+  margin: 0 0 0.35rem;
+  color: #166534;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: clamp(1.8rem, 3vw, 2.35rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.dashboard-header p {
+  margin: 0.5rem 0 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+
+/* =========================================
+   ADD JOB BUTTON
+========================================= */
+
+.dashboard-action-button {
+  flex-shrink: 0;
+  min-height: 46px;
+  padding: 0 1.2rem;
+  border: 1px solid #166534;
+  border-radius: 10px;
+  background: #166534;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(22, 101, 52, 0.18);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.dashboard-action-button:hover {
+  background: #14532d;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(22, 101, 52, 0.22);
+}
+
+.dashboard-action-button:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   METRICS
+========================================= */
+
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.metric-card {
+  position: relative;
+
+  min-height: 105px;
+  padding: 1.25rem 1.4rem;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.metric-value {
+  color: #0f172a;
+  font-size: 1.65rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.metric-label {
+  margin-top: 0.45rem;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+
+/* =========================================
+   MAIN GRID
+========================================= */
+
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.15fr) minmax(280px, 0.95fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+/* =========================================
+   PANELS
+========================================= */
+
+.analytics-panel,
+.status-panel,
+.recent-applications,
+.metric-card {
+  background: #ffffff;
+  border: 1px solid #dfe7e2;
+border-radius: 14px;
+}
+
+.analytics-panel,
+.status-panel {
+  min-height: 365px;
+}
+
+.analytics-panel {
+  padding: 1.4rem;
+}
+
+.status-panel {
+  padding: 1.4rem;
+}
+
+.recent-applications {
+  padding: 1.4rem;
+}
+
+
+/* =========================================
+   PANEL HEADER
+========================================= */
+
+.panel-header {
+  margin-bottom: 1rem;
+}
+
+.panel-header-space-between {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.panel-overline {
+  margin: 0 0 0.3rem;
+
+  color: #64748b;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.panel-title {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+
+/* =========================================
+   CHART
+========================================= */
+
+.chart-box {
+  position: relative;
+  width: 100%;
+  height: 290px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-center-label {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -58%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  pointer-events: none;
+}
+
+.chart-center-value {
+  color: #0f172a;
+  font-size: 1.55rem;
+  font-weight: 750;
+  line-height: 1;
+}
+
+.chart-center-note {
+  margin-top: 0.3rem;
+  color: #64748b;
+  font-size: 0.72rem;
+}
+
+
+/* =========================================
+   STATUS LIST
+========================================= */
+
+.status-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-row {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.9rem 0.25rem;
+
+  border: 0;
+  border-bottom: 1px solid #edf1f5;
+
+  background: transparent;
+
+  color: #334155;
+
+  font-size: 0.8rem;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    padding 0.15s ease;
+}
+
+.status-row:last-child {
+  border-bottom: 0;
+}
+
+.status-row:hover {
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
+  background: #f8fafc;
+}
+
+.status-row-label {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.status-interested {
+  background: #d97706;
+}
+
+.status-applied {
+  background: #2563eb;
+}
+
+.status-interview {
+  background: #0ea5e9;
+}
+
+.status-accepted {
+  background: #16a34a;
+}
+
+.status-rejected {
+  background: #dc2626;
+}
+
+.status-row-count {
+  color: #334155;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   RECENT APPLICATIONS
+========================================= */
+
+.view-all-text {
+  color: #166534;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.view-all-text:hover {
+  text-decoration: underline;
+}
+
+.recent-table {
+  border-top: 1px solid #edf1f5;
+}
+
+.recent-row {
+  min-height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  padding: 0.9rem 0;
+
+  border-bottom: 1px solid #edf1f5;
+}
+
+.recent-row:last-child {
+  border-bottom: 0;
+}
+
+.recent-role {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.recent-company {
+  margin: 0.25rem 0 0;
+
+  color: #64748b;
+
+  font-size: 0.74rem;
+}
+
+.recent-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.recent-status {
+  padding: 0.35rem 0.7rem;
+
+  border-radius: 999px;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.recent-status.status-applied {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.recent-status.status-interview {
+  background: #ecfeff;
+  color: #0891b2;
+}
+
+.recent-status.status-accepted {
+  background: #ecfdf5;
+  color: #15803d;
+}
+
+.recent-status.status-rejected {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.recent-status.status-interested {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.recent-date {
+  min-width: 45px;
+
+  color: #94a3b8;
+
+  font-size: 0.7rem;
+  text-align: right;
+}
+
+.recent-empty {
+  padding: 2.5rem 1rem;
+
+  color: #94a3b8;
+
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-panel {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard-page {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .recent-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .recent-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

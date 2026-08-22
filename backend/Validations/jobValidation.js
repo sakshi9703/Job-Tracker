@@ -13,7 +13,10 @@ export const jobSchema = z.object({
     "Rejected",
   ]),
 
-  description: z.string().min(1, "Description is required"),
+  description: z.string()
+    .trim()
+    .optional()
+    .default(""),
 
   date: z.string().min(1, "Date is required"),
 

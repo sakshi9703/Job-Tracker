@@ -1,14 +1,15 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import Navbar from "../components/Navbar.jsx";
+import Navbar from "../components/Navbar/Navbar.jsx";
 import Form from "../components/Form/Form.jsx";
-import Dashboard from "../components/Dashboard.jsx";
+import Dashboard from "../components/Dashboard/Dashboard.jsx";
 import Toolbar from "../components/Tools/Toolbar.jsx";
 import JobList from "../components/JobList/Joblist.jsx";
-import Pagination from "../components/Pagination.jsx";
+import Pagination from "../components/Pagination/Pagination.jsx";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import DashboardSkeleton from "../components/DashboardSkeleton.jsx";
+import Footer from "../components/Footer/Footer.jsx";
 import "./Home.css"
 
 function Home() {
@@ -239,6 +240,7 @@ function Home() {
         currentPage={currentPage}
         onPageChange={handlePageChange}
       ></Pagination>
+      <Footer></Footer>
     </>
   );
 }

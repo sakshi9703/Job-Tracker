@@ -5,6 +5,7 @@ import { parseResume } from "../Services/resumeParser.js";
 import cloudinary from "../Services/cloudinary.js";
 import uploadToCloudinary from "../util/uploadToCloudinary.js";
 import { Readable } from "node:stream";
+import { updatePasswordSchema } from "../Validations/authValidation.js";
 
 export const getProfile = async (req, res) => {
   try {
@@ -63,11 +64,31 @@ export const updateUsername = async (req, res) => {
 
 export const updatePassword = async (req, res) => {
   try {
-    const { currentPassword, newPassword } = req.body;
+    const result = updatePasswordSchema.safeParse(req.body);
+
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        message: result.error.issues[0].message,
+      });
+    }
+
+    const { currentPassword, newPassword } = result.data;
 
     const user = await User.findById(req.userId);
 
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // 1. Verify current password
+    const isMatch = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
 
     if (!isMatch) {
       return res.status(400).json({
@@ -76,17 +97,34 @@ export const updatePassword = async (req, res) => {
       });
     }
 
+    // 2. Check if new password is the same as current password
+    const isSamePassword = await bcrypt.compare(
+      newPassword,
+      user.password
+    );
+
+    if (isSamePassword) {
+      return res.status(400).json({
+        success: false,
+        message: "New password must be different from current password",
+      });
+    }
+
+    // 3. Update password
     user.password = newPassword;
     await user.save();
 
-    res.json({
+    return res.json({
       success: true,
       message: "Password updated successfully",
     });
+
   } catch (err) {
-    res.status(500).json({
+    console.error("Update password error:", err);
+
+    return res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Failed to update password",
     });
   }
 };

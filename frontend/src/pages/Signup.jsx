@@ -8,7 +8,7 @@ import {
   FiLock,
   FiEye,
   FiEyeOff,
-  FiBriefcase,
+  FiArrowRight,
 } from "react-icons/fi";
 
 import "./Auth.css";
@@ -41,17 +41,27 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
     setIsLoading(true);
 
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/signup`,
         inputValue,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        },
       );
 
       if (data.success) {
         notifySuccess(data.message || "Account created successfully");
+
+        setInputValue({
+          email: "",
+          password: "",
+          username: "",
+        });
 
         setTimeout(() => {
           navigate("/");
@@ -60,105 +70,136 @@ const Signup = () => {
         notifyError(data.message || "Something went wrong");
       }
     } catch (error) {
-      notifyError(
-        error.response?.data?.message || "Failed to create account"
-      );
+      console.error("Signup failed:", error);
+
+      const errors = error.response?.data?.errors;
+
+      if (errors) {
+        const firstError = Object.values(errors)?.[0]?.[0];
+
+        notifyError(firstError || "Please check your information.");
+      } else {
+        notifyError(
+          error.response?.data?.message || "Failed to create account",
+        );
+      }
     } finally {
       setIsLoading(false);
     }
-
-    setInputValue({
-      email: "",
-      password: "",
-      username: "",
-    });
   };
 
   return (
     <div className="auth-page">
       <div className="auth-card">
-
-        <h2 className="app-name">JobTracker</h2>
-
-        <h1>Create Account</h1>
-
-        <p className="auth-subtitle">
-          Start tracking your applications in one place.
-        </p>
-
-        <form onSubmit={handleSubmit}>
-          <div className="input-wrapper">
-            <FiUser className="input-icon" />
-
-            <input
-              type="text"
-              name="username"
-              value={username}
-              placeholder="Choose a username"
-              onChange={handleOnChange}
-              required
-              className="form-input"
-            />
+        {/* Brand */}
+        <div className="auth-brand">
+          <div className="auth-brand-mark">
+            <span>J</span>
           </div>
 
-          <div className="input-wrapper">
-            <FiMail className="input-icon" />
+          <span className="auth-brand-name">Job Tracker</span>
+        </div>
 
-            <input
-              type="email"
-              name="email"
-              value={email}
-              placeholder="Enter your email"
-              onChange={handleOnChange}
-              required
-            />
+        {/* Heading */}
+        <div className="auth-heading">
+          <h1>Create your account</h1>
+
+          <p>Start organizing and tracking your job search.</p>
+        </div>
+
+        {/* Form */}
+        <form className="auth-form" onSubmit={handleSubmit}>
+          {/* Username */}
+          <div className="auth-field">
+            <label htmlFor="signup-username">Username</label>
+
+            <div className="auth-input-wrapper">
+              <FiUser className="auth-input-icon" />
+
+              <input
+                id="signup-username"
+                type="text"
+                name="username"
+                value={username}
+                placeholder="Choose a username"
+                onChange={handleOnChange}
+                autoComplete="username"
+                required
+              />
+            </div>
           </div>
 
-          <div className="input-wrapper">
-            <FiLock className="input-icon" />
+          {/* Email */}
+          <div className="auth-field">
+            <label htmlFor="signup-email">Email address</label>
 
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={password}
-              placeholder="Create a password"
-              onChange={handleOnChange}
-              required
-            />
+            <div className="auth-input-wrapper">
+              <FiMail className="auth-input-icon" />
 
-            <button
-              type="button"
-              className="password-toggle"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
-              {showPassword ? <FiEyeOff /> : <FiEye />}
-            </button>
+              <input
+                id="signup-email"
+                type="email"
+                name="email"
+                value={email}
+                placeholder="you@example.com"
+                onChange={handleOnChange}
+                autoComplete="email"
+                required
+              />
+            </div>
           </div>
 
-          <button
-            type="submit"
-            className="auth-btn"
-            disabled={isLoading}
-          >
+          {/* Password */}
+          <div className="auth-field">
+            <label htmlFor="signup-password">Password</label>
+
+            <div className="auth-input-wrapper">
+              <FiLock className="auth-input-icon" />
+
+              <input
+                id="signup-password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                placeholder="Create a password"
+                onChange={handleOnChange}
+                autoComplete="new-password"
+                required
+              />
+
+              <button
+                type="button"
+                className="auth-password-toggle"
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
+            </div>
+          </div>
+
+          {/* Submit */}
+          <button type="submit" className="auth-submit" disabled={isLoading}>
             {isLoading ? (
               <>
-                <span
-                  className="spinner-border spinner-border-sm me-2"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                Creating Account...
+                <span className="auth-spinner" />
+                Creating account...
               </>
             ) : (
-              "Create Account"
+              <>
+                Create account
+                <FiArrowRight />
+              </>
             )}
           </button>
         </form>
 
-        <p className="auth-footer">
-          Already have an account?
-          <Link to="/login"> Login</Link>
-        </p>
+        {/* Footer */}
+        <div className="auth-footer">
+          <span>Already have an account?</span>
+
+          <Link to="/login">Sign in</Link>
+        </div>
       </div>
     </div>
   );

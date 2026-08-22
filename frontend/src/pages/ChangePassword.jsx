@@ -18,37 +18,43 @@ export default function ChangePassword({ onSuccess }) {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    setLoading(true);
+  // Frontend validation
+  if (passwords.newPassword.length < 8) {
+    toast.error("New password must be at least 8 characters");
+    return;
+  }
 
-    try {
-      const { data } = await axios.put(
-        `${import.meta.env.VITE_API_URL}/profile/password`,
-        passwords,
-        { withCredentials: true }
-      );
+  setLoading(true);
 
-      toast.success(data.message);
+  try {
+    const { data } = await axios.put(
+      `${import.meta.env.VITE_API_URL}/profile/password`,
+      passwords,
+      { withCredentials: true }
+    );
 
-      setPasswords({
-        currentPassword: "",
-        newPassword: "",
-      });
+    toast.success(data.message);
 
-      if (onSuccess) {
-        onSuccess();
-      }
-    } catch (err) {
-      toast.error(
-        err.response?.data?.message ||
-          "Failed to change password"
-      );
-    } finally {
-      setLoading(false);
+    setPasswords({
+      currentPassword: "",
+      newPassword: "",
+    });
+
+    if (onSuccess) {
+      onSuccess();
     }
-  };
+  } catch (err) {
+    toast.error(
+      err.response?.data?.message ||
+        "Failed to change password"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <form className="settings-form" onSubmit={handleSubmit}>
@@ -84,6 +90,7 @@ export default function ChangePassword({ onSuccess }) {
           value={passwords.newPassword}
           onChange={handleChange}
           placeholder="Enter new password"
+          minLength={8}
           required
         />
       </div>

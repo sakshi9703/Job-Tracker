@@ -23,7 +23,7 @@ export default function JobList({
   error,
   loading,
   refreshData,
-  setShowJobModal
+  setShowJobModal,
 }) {
   const [generatingQuestions, setGeneratingQuestions] = useState(null);
   const [analysis, setAnalysis] = useState(null);
@@ -35,9 +35,8 @@ export default function JobList({
   const [showQuestionsGeneratingModal, setShowQuestionsGeneratingModal] =
     useState(false);
 
-    const [expandedJobId, setExpandedJobId] = useState(null);
-
-    
+  const [expandedDescriptionId, setExpandedDescriptionId] = useState(null);
+  const [expandedNotesId, setExpandedNotesId] = useState(null);
 
   const handleDelete = async (id) => {
     const result = await Swal.fire({
@@ -148,7 +147,7 @@ export default function JobList({
 
   return (
     <div className="container py-4" ref={jobRef}>
-      <h2 className="job-list-heading">Job List</h2>
+      <h2 className="job-list-heading">Your Applications</h2>
       {loading && (
         <div className="empty-state">
           <h4>Loading jobs...</h4>
@@ -173,8 +172,6 @@ export default function JobList({
 
       <div className="job-grid">
         {currentJobs.map((job) => (
-          
-
           <div key={job._id} className="job-card">
             <div className="job-header">
               <div>
@@ -189,24 +186,31 @@ export default function JobList({
 
             {job.description && (
   <div className="job-notes">
-    {expandedJobId === job._id
-      ? job.description
-      : job.description.slice(0, 200)}
+    <span className="job-notes-label">Job Description</span>
 
-    {job.description.length > 200 && (
-      <span
-        className="read-toggle"
-        onClick={() =>
-          setExpandedJobId(
-            expandedJobId === job._id ? null : job._id
-          )
-        }
-      >
-        {expandedJobId === job._id
-          ? " Read Less"
-          : "...Read More"}
-      </span>
-    )}
+    <div className="job-notes-content">
+      {expandedDescriptionId === job._id
+        ? job.description
+        : job.description.slice(0, 200)}
+
+      {job.description.length > 200 && (
+        <button
+          type="button"
+          className="read-toggle"
+          onClick={() =>
+            setExpandedDescriptionId(
+              expandedDescriptionId === job._id
+                ? null
+                : job._id
+            )
+          }
+        >
+          {expandedDescriptionId === job._id
+            ? "Read Less"
+            : "Read More"}
+        </button>
+      )}
+    </div>
   </div>
 )}
 
@@ -222,27 +226,33 @@ export default function JobList({
               </div>
             </div>
 
-
             {job.notes && (
-  <div className="job-notes">
-    {expandedJobId === job._id
-      ? job.notes
-      : job.notes.slice(0, 150)}
+  <div className="job-notes job-notes-secondary">
+    <span className="job-notes-label">Notes</span>
 
-    {job.notes.length > 150 && (
-      <span
-        className="read-toggle"
-        onClick={() =>
-          setExpandedJobId(
-            expandedJobId === job._id ? null : job._id
-          )
-        }
-      >
-        {expandedJobId === job._id
-          ? " Read Less"
-          : "...Read More"}
-      </span>
-    )}
+    <div className="job-notes-content">
+      {expandedNotesId === job._id
+        ? job.notes
+        : job.notes.slice(0, 150)}
+
+      {job.notes.length > 150 && (
+        <button
+          type="button"
+          className="read-toggle"
+          onClick={() =>
+            setExpandedNotesId(
+              expandedNotesId === job._id
+                ? null
+                : job._id
+            )
+          }
+        >
+          {expandedNotesId === job._id
+            ? "Read Less"
+            : "Read More"}
+        </button>
+      )}
+    </div>
   </div>
 )}
 

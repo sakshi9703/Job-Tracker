@@ -1,0 +1,672 @@
+/* =========================================================
+   DASHBOARD SKELETON
+========================================================= */
+
+.dashboard-skeleton {
+  min-height: 100vh;
+
+  background: #f8fafc;
+
+  color: #0f172a;
+}
+
+
+/* =========================================================
+   BASE SKELETON
+========================================================= */
+
+.dashboard-skeleton-block {
+  background: linear-gradient(
+    90deg,
+    #e2e8f0 25%,
+    #f1f5f9 50%,
+    #e2e8f0 75%
+  );
+
+  background-size: 200% 100%;
+
+  border-radius: 8px;
+
+  animation: skeletonShimmer 1.6s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.skeleton-navbar {
+  height: 68px;
+
+  display: flex;
+  align-items: center;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.skeleton-navbar-inner {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 0 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.skeleton-brand {
+  width: 120px;
+  height: 24px;
+
+  border-radius: 7px;
+}
+
+.skeleton-nav-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 1.25rem;
+}
+
+.skeleton-nav-link {
+  width: 60px;
+  height: 14px;
+
+  border-radius: 6px;
+}
+
+.skeleton-nav-profile {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+}
+
+
+/* =========================================================
+   DASHBOARD CONTAINER
+========================================================= */
+
+.skeleton-dashboard {
+  padding: 2rem 1.5rem 3rem;
+}
+
+.skeleton-dashboard-container {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.skeleton-dashboard-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 2rem;
+
+  margin-bottom: 2rem;
+}
+
+.skeleton-header-content {
+  min-width: 0;
+}
+
+.skeleton-greeting {
+  width: 145px;
+  height: 13px;
+
+  margin-bottom: 0.7rem;
+
+  border-radius: 6px;
+}
+
+.skeleton-title {
+  width: 390px;
+  height: 29px;
+
+  margin-bottom: 0.7rem;
+
+  border-radius: 7px;
+}
+
+.skeleton-subtitle {
+  width: 350px;
+  height: 14px;
+
+  border-radius: 6px;
+}
+
+.skeleton-add-button {
+  width: 105px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+.skeleton-metrics {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-metric-card {
+  min-height: 108px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 1.25rem;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.03);
+}
+
+.skeleton-metric-number {
+  width: 50px;
+  height: 27px;
+
+  margin-bottom: 0.65rem;
+
+  border-radius: 7px;
+}
+
+.skeleton-metric-label {
+  width: 125px;
+  height: 13px;
+
+  border-radius: 6px;
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.skeleton-main-grid {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1.65fr) minmax(300px, 0.85fr);
+
+  gap: 1.25rem;
+
+  margin-bottom: 1.5rem;
+}
+
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.skeleton-panel,
+.skeleton-recent-panel {
+  background: #ffffff;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.03);
+}
+
+.skeleton-panel {
+  min-height: 390px;
+
+  padding: 1.5rem;
+}
+
+.skeleton-panel-header {
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-overline {
+  width: 120px;
+  height: 11px;
+
+  margin-bottom: 0.6rem;
+
+  border-radius: 5px;
+}
+
+.skeleton-panel-title {
+  width: 280px;
+  height: 19px;
+
+  border-radius: 6px;
+}
+
+.skeleton-panel-title.short {
+  width: 180px;
+}
+
+.skeleton-panel-title.medium {
+  width: 210px;
+}
+
+
+/* =========================================================
+   ANALYTICS SKELETON
+========================================================= */
+
+.skeleton-chart-area {
+  position: relative;
+
+  height: 275px;
+
+  display: flex;
+  align-items: flex-end;
+
+  padding: 1rem 0.5rem 0;
+
+  border-top: 1px solid #f1f5f9;
+}
+
+.skeleton-chart-bars {
+  width: 100%;
+  height: 210px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+
+  gap: 1rem;
+}
+
+.skeleton-chart-bar {
+  width: 9%;
+
+  min-height: 40px;
+
+  border-radius: 7px 7px 3px 3px;
+}
+
+.bar-1 {
+  height: 42%;
+}
+
+.bar-2 {
+  height: 64%;
+}
+
+.bar-3 {
+  height: 50%;
+}
+
+.bar-4 {
+  height: 78%;
+}
+
+.bar-5 {
+  height: 58%;
+}
+
+.bar-6 {
+  height: 88%;
+}
+
+.bar-7 {
+  height: 68%;
+}
+
+.skeleton-chart-line {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  height: 1px;
+
+  background: #f1f5f9;
+
+  border-radius: 0;
+}
+
+.line-one {
+  bottom: 25%;
+}
+
+.line-two {
+  bottom: 50%;
+}
+
+.line-three {
+  bottom: 75%;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.skeleton-status-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.25rem;
+}
+
+.skeleton-status-row {
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.5rem 0.25rem;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.skeleton-status-row:last-child {
+  border-bottom: none;
+}
+
+.skeleton-status-left {
+  display: flex;
+  align-items: center;
+
+  gap: 0.7rem;
+}
+
+.skeleton-status-indicator {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+}
+
+.skeleton-status-label {
+  width: 85px;
+  height: 13px;
+
+  border-radius: 6px;
+}
+
+.skeleton-status-count {
+  width: 28px;
+  height: 24px;
+
+  border-radius: 7px;
+}
+
+
+/* =========================================================
+   RECENT APPLICATIONS
+========================================================= */
+
+.skeleton-recent-panel {
+  padding: 1.5rem;
+}
+
+.skeleton-recent-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 1rem;
+}
+
+.skeleton-view-all {
+  width: 55px;
+  height: 13px;
+
+  margin-top: 0.25rem;
+
+  border-radius: 6px;
+}
+
+.skeleton-recent-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-recent-row {
+  min-height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  padding: 0.9rem 0;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.skeleton-recent-row:last-child {
+  border-bottom: none;
+}
+
+.skeleton-recent-info {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.skeleton-recent-role {
+  width: 170px;
+  height: 14px;
+
+  margin-bottom: 0.45rem;
+
+  border-radius: 6px;
+}
+
+.skeleton-recent-company {
+  width: 110px;
+  height: 11px;
+
+  border-radius: 5px;
+}
+
+.skeleton-recent-meta {
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+}
+
+.skeleton-recent-status {
+  width: 72px;
+  height: 24px;
+
+  border-radius: 999px;
+}
+
+.skeleton-recent-date {
+  width: 65px;
+  height: 11px;
+
+  border-radius: 5px;
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+  .skeleton-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skeleton-analytics-panel,
+  .skeleton-status-panel {
+    min-height: auto;
+  }
+
+  .skeleton-metrics {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+  .skeleton-navbar {
+    height: 62px;
+  }
+
+  .skeleton-navbar-inner {
+    padding: 0 1rem;
+  }
+
+  .skeleton-nav-actions {
+    gap: 0.75rem;
+  }
+
+  .skeleton-nav-link {
+    width: 45px;
+  }
+
+  .skeleton-dashboard {
+    padding: 1.35rem 1rem 2rem;
+  }
+
+  .skeleton-dashboard-header {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 1rem;
+  }
+
+  .skeleton-title {
+    width: min(90%, 320px);
+  }
+
+  .skeleton-subtitle {
+    width: min(90%, 300px);
+  }
+
+  .skeleton-add-button {
+    width: 100%;
+  }
+
+  .skeleton-metrics {
+    grid-template-columns: 1fr;
+
+    gap: 0.75rem;
+  }
+
+  .skeleton-metric-card {
+    min-height: 90px;
+  }
+
+  .skeleton-panel,
+  .skeleton-recent-panel {
+    padding: 1.15rem;
+
+    border-radius: 15px;
+  }
+
+  .skeleton-chart-area {
+    height: 220px;
+  }
+
+  .skeleton-chart-bars {
+    height: 160px;
+  }
+
+  .skeleton-recent-row {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .skeleton-recent-meta {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+  .skeleton-brand {
+    width: 95px;
+  }
+
+  .skeleton-nav-link {
+    width: 35px;
+  }
+
+  .skeleton-dashboard {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .skeleton-title {
+    height: 24px;
+  }
+
+  .skeleton-panel-title {
+    width: 220px;
+  }
+
+  .skeleton-panel-title.short {
+    width: 150px;
+  }
+
+  .skeleton-chart-area {
+    height: 190px;
+  }
+
+  .skeleton-chart-bars {
+    height: 135px;
+
+    gap: 0.5rem;
+  }
+}
