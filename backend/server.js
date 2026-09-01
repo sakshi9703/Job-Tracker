@@ -60,6 +60,15 @@ app.get("/", (req, res) => {
   res.send("server running");
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    success: true,
+    status: "healthy",
+    service: "Job Tracker API",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 app.get("/verify", userVerification, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
